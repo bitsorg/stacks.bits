@@ -1,8 +1,8 @@
 package: SWAN
 version: "%(tag_basename)s"
 tag: "v1.0"
-requires:
-  - LCG
+#requires:
+#  - LCG
 #  - ngbauth_submit
 #  - myschedd
 #  - condor
