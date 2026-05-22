@@ -3,7 +3,9 @@ version: "%(tag_basename)s"
 tag: "v1.0"
 requires:
   - lcg.bits
+  - ROOT
   - Geant4
+  - Geant4-vecgeom-scalar
 # contrib
   - gcc
 # generators
@@ -54,8 +56,6 @@ requires:
   - recola_SM_ATGC_WARSAW
 # externals
   - RELAX
-  - Geant4
-  - Geant4-vecgeom-scalar
   - Garfield++
   - Gaudi
   - EDM4hep
