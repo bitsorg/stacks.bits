@@ -1,18 +1,17 @@
 package: defaults-dev4
 version: v1
 env:
-  CXXFLAGS: "-fPIC -g -O2 -std=c++20"
+  CXXFLAGS: "-fPIC -g -O2"
   CFLAGS: "-fPIC -g -O2"
   CMAKE_BUILD_TYPE: "RELWITHDEBINFO"
   MACOSX_DEPLOYMENT_TARGET: '14.0'
   ENABLE_IPO: 'OFF'
-  CXXSTD: '20'
 
 overrides:
   GCC-Toolchain:
     prefer_system: (False) 
     source: https://github.com/alisw/gcc-toolchain
-    tag: v13.2.0-alice1
+    tag: v15.2.0-alice1
 
 append_arch: gcc15-dbg
 ---

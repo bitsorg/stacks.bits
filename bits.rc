@@ -1,0 +1,4 @@
+[bits]
+organisation = stacks 
+  repo_dir=.
+  search_path=lcg
