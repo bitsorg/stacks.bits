@@ -3,12 +3,12 @@ version: "%(tag_basename)s"
 tag: "v1.0"
 requires:
   - lcg.bits
+  - "libosxunwind:.*osx.*"
+  - "heaptrack:(?!osx)"   
+  - "g4hepem:(?cuda)"
   - ROOT
   - Geant4
   - Geant4-vecgeom-scalar
-# contrib
-  - gcc
-# generators
   - SFGen
   - apfel
   - contur
@@ -38,7 +38,7 @@ requires:
   - crmc
   - hydjet
   - tauola
-  - hydjet++
+  - hydjetcpp
   - alpgen
   - pyquen
   - baurmc
@@ -51,12 +51,11 @@ requires:
   - ampt
   - thep8i
   - epos4
-  - compilebox
+# - compilebox
   - geneva
   - recola_SM_ATGC_WARSAW
-# externals
   - RELAX
-  - Garfield++
+  - GarfieldCPP
   - Gaudi
   - EDM4hep
   - lcgenv
@@ -74,7 +73,6 @@ requires:
   - astunparse
   - auth_get_sso_cookie
   - autopep8
-  - backcall
   - black
   - boto3
   - C50
@@ -103,7 +101,6 @@ requires:
   - Frontier_Client
   - fribidi
   - func_adl_xAOD
-  - funcsigs
   - gcovr
   - gdal
   - git
@@ -113,7 +110,6 @@ requires:
   - grpc
   - hadoop_xrootd
   - hbase
-  - heaptrack
   - hepdata_lib
   - HepPDT
   - highfive
@@ -122,7 +118,6 @@ requires:
   - horovod
   - hyperopt
   - imagemagick
-  - ipython_genutils
   - itk
   - jsonc
   - jl_ijulia
@@ -139,7 +134,6 @@ requires:
   - logilabcommon
   - lwtnn
   - mimesis
-  - mock
   - mysql_connector_python
   - nanomsg
   - nbclient
@@ -154,8 +148,6 @@ requires:
   - pango
   - patchelf
   - pcre
-  - pickleshare
-  - pip
   - pipdeptree
   - pipenv
   - plotly
@@ -164,7 +156,6 @@ requires:
   - pprof
   - pre_commit
   - protobuf2
-  - pyanalysis
   - pydantic_core
   - pydigitalwavetools
   - pydot_ng
@@ -185,7 +176,7 @@ requires:
   - pytools
   - pytorch_lightning
   - p7zip
-  - Qt6
+# - Qt6
   - qibojit
   - qulacs
   - qtpy
@@ -196,22 +187,19 @@ requires:
   - rq
   - ruamel_yaml
   - ruff
-  - scandir
   - scikit_rf
   - servicex
   - setuptools
   - simdjson
-  - simplegeneric
-  - singledispatch
   - sollya
   - spdlog
-  - sphinxcontrib_applehelp
-  - sphinxcontrib_devhelp
-  - sphinxcontrib_htmlhelp
-  - sphinxcontrib_jsmath
-  - sphinxcontrib_qthelp
-  - sphinxcontrib_serializinghtml
-  - sphinx_rtd_theme
+# - sphinxcontrib_applehelp
+# - sphinxcontrib_devhelp
+# - sphinxcontrib_htmlhelp
+# - sphinxcontrib_jsmath
+# - sphinxcontrib_qthelp
+# - sphinxcontrib_serializinghtml
+# - sphinx_rtd_theme
   - storm
   - suitesparse
   - svgpathtools
@@ -219,7 +207,6 @@ requires:
   - synr
   - tensorboardX
   - termcolor
-  - testpath
   - tfs_pandas
   - threadpoolctl
   - torch_cluster
@@ -229,7 +216,6 @@ requires:
   - unigen
   - uproot_browser
   - qcachegrind
-  - vcversioner
   - vectorclass
   - virtualenvwrapper
   - VTK
@@ -320,6 +306,87 @@ requires:
   - unuran
   - ftgl
   - giflib
-  - click_option_group
+  - GENIE
+  - Xdevel
+  - adaptyst
+  - asiofi
+  - babayaga
+  - bdsim
+  - bear
+  - bhlumi
+  - cedviewer
+  - cepgen
+  - cldconfig
+  - clicperformance
+  - clupatra
+  - conddbmysql
+  - conformaltracking
+  - ddmarlinpandora
+  - ddml
+  - fastnlo_toolkit
+  - fcalclusterer
+  - fcc_config
+  - fccanalyses
+  - fccdetectors
+  - fccsw
+  - forwardtracking
+  - freeglut
+  - freetype
+  - func_adl_servicex
+  - garlic
+  - geant4_vmc
+  - genfit
+  - gnu_sed
+  - gnu_tar
+  - grpcio_status
+  - guinea_pig
+  - hep_flare
+  - hls4ml
+  - ildperformance
+  - iwyu
+  - jupyter_contrib_nbextensions
+  - k4_project_template
+  - k4clue
+  - k4generatorsconfig
+  - k4rectracker
+  - k4simdelphes
+  - key4hep_stack
+  - kfp
+  - lcfiplus
+  - lctuple
+  - lhapdfsets
+  - libedit
+  - libsodium
+  - libuv
+  - libxkbcommon
+  - marlindd4hep
+  - marlinfastjet
+  - marlinkinfitprocessors
+  - marlinmlflavortagging
+  - marlinreco
+  - marlintrkprocessors
+  - mlpack
+  - motif
+  - myschedd
+# - ngbauth_submit
+# - nxcals_extraction_api
+  - opendatadetector
+  - opengl
+  - overlay
+  - pandoraanalysis
+  - pep517
+  - pepper_kokkos
+  - physsim
+  - ponder
+  - pybdsim
+  - pyqtwebengine
+  - pythonsollya
+# - qwt
+  - rapidsim
+  - rpy2
+# - soqt
+  - sqlite
+  - vecmath
+  - whizard
+  - xqilla
 ---
-

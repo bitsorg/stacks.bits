@@ -9,7 +9,6 @@ env:
 
 overrides:
   GCC-Toolchain:
-    prefer_system: (False) 
     source: https://github.com/alisw/gcc-toolchain
     tag: v15.2.0-alice1
 
