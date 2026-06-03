@@ -19,5 +19,7 @@ overrides:
   GCC-Toolchain:
     source: https://github.com/alisw/gcc-toolchain
     tag: v15.2.0-alice1
-append_arch: gcc15-dbg
+# Appended verbatim to the arch string; the leading '-' is the separator
+# (bits does not assume one) -> ubuntu2510_x86-64-gcc15-dbg.
+append_arch: -gcc15-dbg
 ---

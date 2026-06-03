@@ -5,5 +5,5 @@ overrides:
     prefer_system: (False) 
     source: https://github.com/alisw/gcc-toolchain
     tag: v13.2.0-alice1
-append_arch: gcc13
+append_arch: -gcc13
 ---

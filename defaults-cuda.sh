@@ -5,7 +5,7 @@ variables:
   cuda: "true"
 
 # Own install tree 
-append_arch: cuda
+append_arch: -cuda
 
 # Flags every package's build env inherits.
 env:
