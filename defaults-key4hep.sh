@@ -11,6 +11,9 @@ overrides:
   # (k4fwcore v01-05, k4edm4hep2lcioconv v00-14, k4marlinwrapper v00-14, ...)
   # request EDM4hep 1.0 and are the correct match for this stack, so they are
   # left on their defaults.
+  #
+  # The C++ standard is NOT set here: it lives in defaults-gcc15.sh (the compiler
+  # layer), so build with --defaults dev4::gcc15::key4hep.
   - acts = 44.4.0
   - k4actstracking = v00-02
 ---
