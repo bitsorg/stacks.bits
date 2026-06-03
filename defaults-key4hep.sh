@@ -22,9 +22,4 @@ disable:
   - k4simgeant4
   - k4reco
   - k4gaudipandora
-  # GENIE needs ROOT's removed TPythia6/TMCParticle classes (gone after ROOT
-  # 6.30); LCG_109 also comments it out.
-  - GENIE
-  # fastnlo_toolkit's fnlo-tk-yodaout uses YODA/HistoBin1D.h, removed in yoda 2.x.
-  - fastnlo_toolkit
 ---
