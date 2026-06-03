@@ -9,41 +9,34 @@ requires:
   - EDM4hep
   - DD4hep
   - Gaudi
-  # Version pins below align the key4hep subtree with LCG_109 (heptools-devkey),
-  # where bits' recipe defaults are ahead. Pins set both version and tag, so
-  # github recipes use the vNN-NN tag string and the acts tarball uses its
-  # plain version. These apply only to this metapackage's build, leaving
-  # externals.sh/generators.sh on the recipe defaults.
-  # k4fwcore + k4simgeant4 are repinned NEWER than devkey (together): devkey's
-  # k4simgeant4 v0.1.0pre17 (its latest tag) is incompatible with Gaudi v40r2's
-  # Property API, so we track its `main`, which needs k4FWCore::putCellIDEncoding
-  # — present in k4fwcore v01-06 (latest tag) but not the devkey v01-04. If other
-  # k4* consumers break against k4fwcore v01-06, they likely need bumping too.
-  - k4fwcore = v01-06
-  - k4edm4hep2lcioconv = v00-13
-  - k4marlinwrapper = v00-13
+  # Component list only. Version pins and disables live in defaults-key4hep.sh
+  # (acts 44.4.0 / k4actstracking v00-02; k4simgeant4 + k4reco + k4gaudipandora
+  # disabled while incompatible with Gaudi v40r2).
+  - k4fwcore
+  - k4edm4hep2lcioconv
+  - k4marlinwrapper
   - k4geo
-  - k4simgeant4 = main
+  - k4simgeant4
   - k4reco
   - k4gen
   - k4reccalorimeter
-  - k4gaudipandora = v0.1.0
+  - k4gaudipandora
   - k4mljettagger
-  - k4actstracking = v00-02
+  - k4actstracking
   - LCIO
   - marlin
   - marlinutil
   - marlintrk
   - kaltest
   - ddkaltest
-  - raida = v01-11
+  - raida
   - GSL
   - aidatt
   - kkmcee
   - ipython
   - mold
   # iLCSoft / FCC / Marlin top-level packages
-  - acts = 44.4.0
+  - acts
   - cedviewer
   - cldconfig
   - clicperformance

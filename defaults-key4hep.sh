@@ -1,21 +1,30 @@
 package: defaults-key4hep
 version: v1
 overrides:
- -  k4fwcore = v01-06
-  - k4edm4hep2lcioconv = v00-13
-  - k4marlinwrapper = v00-13
-  - k4simgeant4 = main
-  - k4gaudipandora = v0.1.0
-  - k4actstracking = v00-02
+  # Only acts is genuinely pinned: bits' default acts 26.0.0 is too old for
+  # k4actstracking (which needs the Acts Core + PluginDD4hep from the 44.x line),
+  # so use the LCG_109 devkey acts 44.4.0 with the matching k4actstracking v00-02.
+  #
+  # The other devkey k4* versions are deliberately NOT pinned. They were written
+  # for the EDM4hep-0.x era and do find_package(EDM4HEP 0.99 REQUIRED), which
+  # EDM4hep 1.0 rejects under SameMajorVersion. bits' newer recipe defaults
+  # (k4fwcore v01-05, k4edm4hep2lcioconv v00-14, k4marlinwrapper v00-14, ...)
+  # request EDM4hep 1.0 and are the correct match for this stack, so they are
+  # left on their defaults.
   - acts = 44.4.0
+  - k4actstracking = v00-02
 
 disable:
+  # k4simgeant4 (and its dependents k4reco -> k4gaudipandora) do not compile
+  # against this stack's Gaudi v40r2 under gcc15: neither the latest tag
+  # v0.1.0pre17 nor main builds (Gaudi Property.h / SmartIF.h fail to
+  # instantiate). Re-enable once upstream ships a Gaudi-v40-compatible release.
+  - k4simgeant4
+  - k4reco
+  - k4gaudipandora
   # GENIE needs ROOT's removed TPythia6/TMCParticle classes (gone after ROOT
-  # 6.30); LCG_109 also comments it out. Re-enable once a standalone EGPythia6
-  # package provides those classes.
+  # 6.30); LCG_109 also comments it out.
   - GENIE
-  # fastnlo_toolkit's fnlo-tk-yodaout uses YODA/HistoBin1D.h, removed in yoda
-  # 2.x; LCG_109 pins no fastnlo version (not built). Re-enable when bumped to a
-  # yoda-2 release or built --without-yoda.
+  # fastnlo_toolkit's fnlo-tk-yodaout uses YODA/HistoBin1D.h, removed in yoda 2.x.
   - fastnlo_toolkit
 ---
