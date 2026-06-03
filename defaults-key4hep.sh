@@ -13,13 +13,4 @@ overrides:
   # left on their defaults.
   - acts = 44.4.0
   - k4actstracking = v00-02
-
-disable:
-  # k4simgeant4 (and its dependents k4reco -> k4gaudipandora) do not compile
-  # against this stack's Gaudi v40r2 under gcc15: neither the latest tag
-  # v0.1.0pre17 nor main builds (Gaudi Property.h / SmartIF.h fail to
-  # instantiate). Re-enable once upstream ships a Gaudi-v40-compatible release.
-  - k4simgeant4
-  - k4reco
-  - k4gaudipandora
 ---
