@@ -264,7 +264,9 @@ requires:
   - ftgl
   - giflib
   - Xdevel
-  - adaptyst
+  # adaptyst is a perf-based profiler; perf is now a system_requirement (Linux
+  # only), so adaptyst is Linux-only too.
+  - "adaptyst:(?!osx)"
   - asiofi
   - bdsim
   - bear
@@ -294,7 +296,10 @@ requires:
   - ponder
   - pybdsim
   - pyqtwebengine
-  - pythonsollya
+  # pythonsollya is commented out in LCG_109 (heptools-dev-base) — its cython
+  # build fails to find sollya.h; disabled here to match. Uncomment + fix the
+  # sollya include path if needed.
+# - pythonsollya
   - rpy2
   - sqlite
   - vecmath
