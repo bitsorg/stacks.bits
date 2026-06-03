@@ -1,5 +1,12 @@
 package: defaults-release
 version: v1
+# Optional: override the architecture-string layout. A literal value or a
+# template using %(os)s (e.g. ubuntu2510), %(machine)s (x86-64, dashed) and
+# %(_machine)s (x86_64, underscore). The built-in default is %(os)s_%(machine)s.
+# An explicit --architecture on the command line always overrides this.
+#   architecture: %(os)s_%(machine)s     # ubuntu2510_x86-64  (default layout)
+#   architecture: %(os)s_%(_machine)s    # ubuntu2510_x86_64
+#   architecture: %(_machine)s-%(os)s    # x86_64-ubuntu2510
 env:
   CXXFLAGS: "-fPIC -g -O2"
   CFLAGS: "-fPIC -g -O2"
