@@ -1,18 +1,13 @@
-package: defaults-dev4
+package: defaults-key4hep
 version: v1
-env:
-  CXXFLAGS: "-fPIC -g -O2"
-  CFLAGS: "-fPIC -g -O2"
-  CMAKE_BUILD_TYPE: "RELWITHDEBINFO"
-  MACOSX_DEPLOYMENT_TARGET: '14.0'
-  ENABLE_IPO: 'OFF'
-
 overrides:
-  GCC-Toolchain:
-    source: https://github.com/alisw/gcc-toolchain
-    tag: v15.2.0-alice1
-
-append_arch: gcc15-dbg
+ -  k4fwcore = v01-06
+  - k4edm4hep2lcioconv = v00-13
+  - k4marlinwrapper = v00-13
+  - k4simgeant4 = main
+  - k4gaudipandora = v0.1.0
+  - k4actstracking = v00-02
+  - acts = 44.4.0
 
 disable:
   # GENIE needs ROOT's removed TPythia6/TMCParticle classes (gone after ROOT
@@ -23,4 +18,4 @@ disable:
   # 2.x; LCG_109 pins no fastnlo version (not built). Re-enable when bumped to a
   # yoda-2 release or built --without-yoda.
   - fastnlo_toolkit
-  - compilebox                                                                                                                                     ---
+---

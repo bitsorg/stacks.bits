@@ -51,24 +51,18 @@ requires:
   - recola_SM_ATGC_WARSAW
   - RELAX
   - unigen
-  # GENIE (2.12.6 and 3.x) unconditionally needs ROOT's TPythia6/TMCParticle
-  # classes, removed from ROOT after 6.30; LCG_109 also has GENIE commented out.
-  # Re-enable once a standalone EGPythia6 package provides those classes.
-# - GENIE
+  - GENIE
   - babayaga
   - bhlumi
   - cepgen
-  # fastnlo_toolkit has no version pinned in LCG_109 (not built there); its
-  # fnlo-tk-yodaout uses YODA/HistoBin1D.h, removed in yoda 2.x. Disabled until
-  # bumped to a yoda-2-compatible release or built --without-yoda.
-# - fastnlo_toolkit
+  - fastnlo_toolkit
   - guinea_pig
   - lhapdfsets
   - rapidsim
   - whizard
   - dpmjet
-# - compilebox
-  - hepmc
+  - compilebox
+  - HepMC
   - heputils
   - photos
   - pyslha
