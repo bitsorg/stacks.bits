@@ -17,6 +17,14 @@ version: v1
 # cvmfs_dir:   /cvmfs/sft.cern.ch/lcg/releases
 # install_dir: %(architecture)s/Packages
 # module_dir:  %(architecture)s/modules
+#
+# Global default for build-time network access inside the recipe sandbox.
+# "on" blocks outgoing network (the safe default); "off" allows it. Many LCG
+# recipes pip-install at build time and need PyPI access, so allow it stack-wide
+# here instead of annotating each recipe. A recipe's own sandbox_network: still
+# overrides this, and --sandbox-network on the CLI overrides both. No effect on
+# Linux local builds (sandboxing is off there); relevant on macOS (sandbox-exec).
+sandbox_network: "off"
 env:
   CXXFLAGS: "-fPIC -g -O2"
   CFLAGS: "-fPIC -g -O2"
