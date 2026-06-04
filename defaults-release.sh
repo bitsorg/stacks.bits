@@ -7,6 +7,16 @@ version: v1
 #   architecture: %(os)s_%(machine)s     # ubuntu2510_x86-64  (default layout)
 #   architecture: %(os)s_%(_machine)s    # ubuntu2510_x86_64
 #   architecture: %(_machine)s-%(os)s    # x86_64-ubuntu2510
+#
+# Optional: declare the CVMFS layout once so the build/publish/reuse paths are
+# derived instead of passed as scattered flags. Templates may use
+# %(architecture)s (the effective, combined arch). install_dir / module_dir are
+# relative to cvmfs_dir.
+#   * docker build    -> --cvmfs-prefix defaults to <cvmfs_dir>/<install_dir>
+#   * --reuse-cvmfs   -> --remote-store defaults to cvmfs://<cvmfs_dir>
+# cvmfs_dir:   /cvmfs/sft.cern.ch/lcg/releases
+# install_dir: %(architecture)s/Packages
+# module_dir:  %(architecture)s/modules
 env:
   CXXFLAGS: "-fPIC -g -O2"
   CFLAGS: "-fPIC -g -O2"
