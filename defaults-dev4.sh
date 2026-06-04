@@ -1,18 +1,10 @@
 package: defaults-dev4
 version: v1
 
-# Global build-time network for the recipe sandbox. "off" allows network so the
-# many pip-installing recipes (numpy and other PythonPipRecipe packages) work
-# under the macOS sandbox-exec wrapper without per-recipe annotation. A recipe's
-# own sandbox_network: still overrides; no effect on Linux local builds.
-sandbox_network: "off"
-
-env:
-  CXXFLAGS: "-fPIC -g -O2"
-  CFLAGS: "-fPIC -g -O2"
-  CMAKE_BUILD_TYPE: "RELWITHDEBINFO"
-  MACOSX_DEPLOYMENT_TARGET: '14.0'
-  ENABLE_IPO: 'OFF'
+# Stack-wide globals (compiler flags, sandbox_network, MACOSX_DEPLOYMENT_TARGET,
+# …) live in defaults-release, which is now always the base of the chain — so
+# `--defaults dev4` behaves like `release::dev4`. This profile only adds dev
+# overlays on top.
 
 disable:
   # GENIE needs ROOT's removed TPythia6/TMCParticle classes (gone after ROOT
