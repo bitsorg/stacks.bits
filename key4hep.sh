@@ -9,9 +9,8 @@ requires:
   - EDM4hep
   - DD4hep
   - Gaudi
-  # Component list only. Version pins and disables live in defaults-key4hep.sh
-  # (acts 44.4.0 / k4actstracking v00-02; k4simgeant4 + k4reco + k4gaudipandora
-  # disabled while incompatible with Gaudi v40r2).
+  - acts = 44.4.0
+  - k4actstracking = v00-02
   - k4fwcore
   - k4edm4hep2lcioconv
   - k4marlinwrapper
@@ -22,7 +21,6 @@ requires:
   - k4reccalorimeter
   - k4gaudipandora
   - k4mljettagger
-  - k4actstracking
   - LCIO
   - marlin
   - marlinutil
@@ -36,7 +34,6 @@ requires:
   - ipython
   - mold
   # iLCSoft / FCC / Marlin top-level packages
-  - acts
   - cedviewer
   - cldconfig
   - clicperformance
