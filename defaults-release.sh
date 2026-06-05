@@ -25,6 +25,12 @@ version: v1
 # overrides this, and --sandbox-network on the CLI overrides both. No effect on
 # Linux local builds (sandboxing is off there); relevant on macOS (sandbox-exec).
 sandbox_network: "off"
+# CPU oversubscription for concurrent --builders. A deep dependency tree rarely
+# keeps every builder busy, so each package's -j is ceil(jobs * factor /
+# builders) instead of jobs/builders — filling otherwise-idle cores. Still
+# clamped to -j and to the (unscaled) memory cap; mild overshoot when all
+# builders are busy is absorbed by the OS scheduler and the nice ladder.
+build_oversubscribe: 1.5
 env:
   CXXFLAGS: "-fPIC -g -O2"
   CFLAGS: "-fPIC -g -O2"
