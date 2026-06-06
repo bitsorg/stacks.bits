@@ -19,7 +19,8 @@ requires:
   - alpaka
   - altair
   - annotated_types
-  - ant
+  # Java/Hadoop build tool; only used by the Java big-data cluster.
+  - "ant:(?!osx)"
   - archspec
   - armadillo
   - assimp
@@ -47,7 +48,8 @@ requires:
   - CppUnit
   - cpymad
   - cx_oracle
-  - dask_lxplus
+  # CERN lxplus batch Dask helper; CERN infra, no consumers.
+  - "dask_lxplus:(?!osx)"
   - delphes
   - doxygen
   # Sphinx documentation toolchain (PyPI)
@@ -70,13 +72,16 @@ requires:
   - gophernotes
   - "gperftools:(?!osx)"
   - grpc
-  - hadoop_xrootd
-  - hbase
+  # Hadoop/XRootD; Java big-data cluster (Linux JAVA_HOME logic). No consumers.
+  - "hadoop_xrootd:(?!osx)"
+  # Hadoop HBase; Java big-data cluster. No consumers.
+  - "hbase:(?!osx)"
   - hepdata_lib
   - hepdata_converter
   - HepPDT
   - highfive
-  - hive
+  # Hadoop Hive; Java big-data cluster. No consumers.
+  - "hive:(?!osx)"
   - hdf5_mpi
   - horovod
   - hyperopt
@@ -258,7 +263,8 @@ requires:
   - scikitimage
   - sentence_transformers
   - xgboost
-  - spark
+  # Apache Spark; Java big-data cluster (consumer nxcals is commented out).
+  - "spark:(?!osx)"
   - jiter
   - mistral_common
   - xdrlib3
