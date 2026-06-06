@@ -127,7 +127,8 @@ requires:
   - langchain_community
   - lcov
   - libclang
-  - libm_aocl
+  # AMD AOCL libm: prebuilt x86-64 Linux binary; Linux-only.
+  - "libm_aocl:(?!osx)"
   - libpqxx
   - libsvm
   - lmfit
@@ -146,13 +147,15 @@ requires:
   - oracledb
   - pacparser
   - pango
-  - patchelf
+  # patchelf patches ELF binaries; macOS uses Mach-O/install_name_tool. Linux-only.
+  - "patchelf:(?!osx)"
   - pcre
   - pipdeptree
   - pipenv
   - plotly
   - polars
-  - prctl
+  # Linux prctl()/libcap process control. Linux-only.
+  - "prctl:(?!osx)"
   - pprof
   - pre_commit
   - protobuf2
@@ -369,7 +372,8 @@ requires:
   - marlintrkprocessors
   - mlpack
   - motif
-  - myschedd
+  # CERN HTCondor schedd plugin. Linux-only.
+  - "myschedd:(?!osx)"
 # - ngbauth_submit
 # - nxcals_extraction_api
   - opendatadetector
