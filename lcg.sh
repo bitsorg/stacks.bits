@@ -390,7 +390,8 @@ requires:
   - physsim
   - ponder
   - pybdsim
-  - pyqtwebengine
+  # brew qt@5 omits QtWebEngine; pyqtwebengine (PyQt5 WebEngine binding, no consumers) is disabled on macOS.
+  - "pyqtwebengine:(?!osx)"
   - pythonsollya
 # - qwt
   - rapidsim

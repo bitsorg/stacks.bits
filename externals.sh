@@ -309,7 +309,8 @@ requires:
   - pepper_kokkos
   - ponder
   - pybdsim
-  - pyqtwebengine
+  # brew qt@5 omits QtWebEngine; pyqtwebengine (PyQt5 WebEngine binding, no consumers) is disabled on macOS.
+  - "pyqtwebengine:(?!osx)"
   # pythonsollya is commented out in LCG_109 (heptools-dev-base) — its cython
   # build fails to find sollya.h; disabled here to match. Uncomment + fix the
   # sollya include path if needed.
