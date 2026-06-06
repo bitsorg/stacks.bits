@@ -3,7 +3,6 @@ version: "%(tag_basename)s"
 tag: "v1.0"
 requires:
   - lcg.bits
-  - "libosxunwind:.*osx.*"
   - "heaptrack:(?!osx)"   
   - "g4hepem:(?cuda)"
   - ROOT

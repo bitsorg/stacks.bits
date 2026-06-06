@@ -5,7 +5,6 @@ license: Apache-2.0
 requires:
   - lcg.bits
   - CMake
-  - "libosxunwind:.*osx.*"
   - "heaptrack:(?!osx)"
   - "g4hepem:(?cuda)"
   - "cudnn:(?cuda)"
