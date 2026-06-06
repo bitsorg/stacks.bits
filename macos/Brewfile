@@ -6,6 +6,7 @@
 brew "fontconfig"
 brew "freetype"
 brew "giflib"
+brew "gnu-sed"
 brew "gnu-tar"
 brew "jpeg-turbo"
 brew "julia"
