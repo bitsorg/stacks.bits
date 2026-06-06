@@ -5,6 +5,7 @@
 
 brew "fontconfig"
 brew "freetype"
+brew "gnu-tar"
 brew "jpeg-turbo"
 brew "libpng"
 brew "libtiff"
