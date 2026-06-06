@@ -3,4 +3,10 @@
 # Regenerate with:  bits brew -a osx_arm64 -o <this file>
 # Install with:     brew bundle --file <this file>
 
+brew "fontconfig"
+brew "freetype"
+brew "jpeg-turbo"
+brew "libpng"
+brew "libtiff"
+brew "pixman"
 brew "readline"
