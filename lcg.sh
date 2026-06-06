@@ -106,7 +106,7 @@ requires:
   - git
   - GitCondDB
   - gophernotes
-  - gperftools
+  - "gperftools:(?!osx)"
   - grpc
   - hadoop_xrootd
   - hbase
@@ -166,8 +166,10 @@ requires:
   - pypdf
   - pyqt_builder
   - pyqt5_sip
-  - pyroscope
-  - pyroscope_io
+  # pyroscope (Grafana profiling server, Linux-only binary) and its Python
+  # client have no consumers in the stack; exclude both on macOS.
+  - "pyroscope:(?!osx)"
+  - "pyroscope_io:(?!osx)"
   - pyserial
   - pyshtools
   - pytensor
@@ -223,8 +225,8 @@ requires:
   - yamlcpp
   - zfit_physics
   - OWSLib
-  - igprof
-  - memray
+  - "igprof:(?!osx)"
+  - "memray:(?!osx)"
   - jupyterlab_rise
   - log4cpp
   - nanobind
