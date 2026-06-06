@@ -88,7 +88,8 @@ requires:
   - imagemagick
   - itk
   - jsonc
-  - jl_ijulia
+  # IJulia Jupyter kernel (needs julia + writes a kernelspec); disabled on macOS.
+  - "jl_ijulia:(?!osx)"
   - jupyter_highlight_selected_word
   - jupyter_latex_envs
   - kokkos
