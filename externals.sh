@@ -118,7 +118,10 @@ requires:
   - prctl
   - pprof
   - pre_commit
-  - protobuf2
+  # protobuf2 is legacy ATLAS-NSW code with no consumers in the stack and does
+  # not build on Apple Silicon; exclude it from the macOS build. Linux still
+  # builds it.
+  - "protobuf2:(?!osx)"
   - pymysql
   - pydantic_core
   - pydigitalwavetools
