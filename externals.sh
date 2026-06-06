@@ -46,7 +46,8 @@ requires:
   - cppzmq
   - CppUnit
   - cpymad
-  - cx_oracle
+  # Oracle DB drivers need the Oracle client (oracle pkg), which is Linux-oriented; disable the Oracle cluster on macOS.
+  - "cx_oracle:(?!osx)"
   # CERN lxplus batch Dask helper; CERN infra, no consumers.
   - "dask_lxplus:(?!osx)"
   - delphes
@@ -111,7 +112,8 @@ requires:
   - omniorb
   - openai
   - opensearch_py
-  - oracledb
+  # Oracle DB drivers need the Oracle client (oracle pkg), which is Linux-oriented; disable the Oracle cluster on macOS.
+  - "oracledb:(?!osx)"
   - pacparser
   - pango
   # patchelf patches ELF binaries; macOS uses Mach-O/install_name_tool. Linux-only.
