@@ -4,6 +4,7 @@
 # Install with:     brew bundle --file <this file>
 
 brew "cairo"
+brew "doxygen"
 brew "fontconfig"
 brew "freeglut"
 brew "freetype"
