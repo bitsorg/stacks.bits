@@ -3,6 +3,7 @@
 # Regenerate with:  bits brew -a osx_arm64 -o <this file>
 # Install with:     brew bundle --file <this file>
 
+brew "cairo"
 brew "fontconfig"
 brew "freeglut"
 brew "freetype"
