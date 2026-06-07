@@ -83,7 +83,8 @@ requires:
   # Hadoop Hive; Java big-data cluster. No consumers.
   - "hive:(?!osx)"
   - hdf5_mpi
-  - horovod
+  # distributed-DL framework (MPI/NCCL/gloo), no consumers; not for a single dev Mac and a hostile macOS build. Disable on macOS.
+  - "horovod:(?!osx)"
   - hyperopt
   - imagemagick
   - itk
