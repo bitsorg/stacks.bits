@@ -5,6 +5,7 @@ license: Apache-2.0
 requires:
   - lcg.bits
   - CMake
+  - "libosxunwind:.*osx.*"
   - "heaptrack:(?!osx)"
   - "g4hepem:(?cuda)"
   - "cudnn:(?cuda)"
@@ -18,8 +19,7 @@ requires:
   - alpaka
   - altair
   - annotated_types
-  # Java/Hadoop build tool; only used by the Java big-data cluster.
-  - "ant:(?!osx)"
+  - ant
   - archspec
   - armadillo
   - assimp
@@ -46,10 +46,8 @@ requires:
   - cppzmq
   - CppUnit
   - cpymad
-  # Oracle DB drivers need the Oracle client (oracle pkg), which is Linux-oriented; disable the Oracle cluster on macOS.
-  - "cx_oracle:(?!osx)"
-  # CERN lxplus batch Dask helper; CERN infra, no consumers.
-  - "dask_lxplus:(?!osx)"
+  - cx_oracle
+  - dask_lxplus
   - delphes
   - doxygen
   # Sphinx documentation toolchain (PyPI)
@@ -70,35 +68,29 @@ requires:
   - git
   - GitCondDB
   - gophernotes
-  - "gperftools:(?!osx)"
+  - gperftools
   - grpc
-  # Hadoop/XRootD; Java big-data cluster (Linux JAVA_HOME logic). No consumers.
-  - "hadoop_xrootd:(?!osx)"
-  # Hadoop HBase; Java big-data cluster. No consumers.
-  - "hbase:(?!osx)"
+  - hadoop_xrootd
+  - hbase
   - hepdata_lib
   - hepdata_converter
   - HepPDT
   - highfive
-  # Hadoop Hive; Java big-data cluster. No consumers.
-  - "hive:(?!osx)"
+  - hive
   - hdf5_mpi
-  # distributed-DL framework (MPI/NCCL/gloo), no consumers; not for a single dev Mac and a hostile macOS build. Disable on macOS.
-  - "horovod:(?!osx)"
+  - horovod
   - hyperopt
   - imagemagick
   - itk
   - jsonc
-  # IJulia Jupyter kernel (needs julia + writes a kernelspec); disabled on macOS.
-  - "jl_ijulia:(?!osx)"
+  - jl_ijulia
   - jupyter_highlight_selected_word
   - jupyter_latex_envs
   - kokkos
   - langchain_community
   - lcov
   - libclang
-  # AMD AOCL libm: prebuilt x86-64 Linux binary; Linux-only.
-  - "libm_aocl:(?!osx)"
+  - libm_aocl
   - libpqxx
   - libsvm
   - lmfit
@@ -114,19 +106,16 @@ requires:
   - omniorb
   - openai
   - opensearch_py
-  # Oracle DB drivers need the Oracle client (oracle pkg), which is Linux-oriented; disable the Oracle cluster on macOS.
-  - "oracledb:(?!osx)"
+  - oracledb
   - pacparser
   - pango
-  # patchelf patches ELF binaries; macOS uses Mach-O/install_name_tool. Linux-only.
-  - "patchelf:(?!osx)"
+  - patchelf
   - pcre
   - pipdeptree
   - pipenv
   - plotly
   - polars
-  # Linux prctl()/libcap process control. Linux-only.
-  - "prctl:(?!osx)"
+  - prctl
   - pprof
   - pre_commit
   # protobuf2 is legacy ATLAS-NSW code with no consumers in the stack and does
@@ -144,10 +133,8 @@ requires:
   - pypdf
   - pyqt_builder
   - pyqt5_sip
-  # pyroscope (Grafana profiling server, Linux-only binary) and its Python
-  # client have no consumers in the stack; exclude both on macOS.
-  - "pyroscope:(?!osx)"
-  - "pyroscope_io:(?!osx)"
+  - pyroscope
+  - pyroscope_io
   - pyserial
   - pyshtools
   - pytensor
@@ -196,8 +183,8 @@ requires:
   - yamlcpp
   - zfit_physics
   - OWSLib
-  - "igprof:(?!osx)"
-  - "memray:(?!osx)"
+  - igprof
+  - memray
   - jupyterlab_rise
   - log4cpp
   - nanobind
@@ -266,8 +253,7 @@ requires:
   - scikitimage
   - sentence_transformers
   - xgboost
-  # Apache Spark; Java big-data cluster (consumer nxcals is commented out).
-  - "spark:(?!osx)"
+  - spark
   - jiter
   - mistral_common
   - xdrlib3
@@ -305,16 +291,14 @@ requires:
   - libxkbcommon
   - mlpack
   - motif
-  # CERN HTCondor schedd plugin. Linux-only.
-  - "myschedd:(?!osx)"
+  - myschedd
   - opengl
   - overlay
   - pep517
   - pepper_kokkos
   - ponder
   - pybdsim
-  # brew qt@5 omits QtWebEngine; pyqtwebengine (PyQt5 WebEngine binding, no consumers) is disabled on macOS.
-  - "pyqtwebengine:(?!osx)"
+  - pyqtwebengine
   # pythonsollya is commented out in LCG_109 (heptools-dev-base) — its cython
   # build fails to find sollya.h; disabled here to match. Uncomment + fix the
   # sollya include path if needed.
