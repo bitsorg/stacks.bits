@@ -35,7 +35,7 @@ system:
   # otherwise-idle cores. Still clamped to -j and to the (unscaled) memory cap;
   # mild overshoot when all builders are busy is absorbed by the OS scheduler
   # and the nice ladder.
-  build_oversubscribe: 1.5
+  build_oversubscribe: 1.25
 
 env:
   CXXFLAGS: "-fPIC -g -O2"
