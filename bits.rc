@@ -1,4 +1,3 @@
-[bits]
 organisation = stacks 
-  repo_dir=.
-  search_path=lcg
+config_dir=.
+search_path=lcg
