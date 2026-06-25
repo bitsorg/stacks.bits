@@ -7,11 +7,6 @@ env:
   MACOSX_DEPLOYMENT_TARGET: '14.0'
   ENABLE_IPO: 'OFF'
 
-# Stack-wide globals (compiler flags, sandbox_network, MACOSX_DEPLOYMENT_TARGET,
-# …) live in defaults-release, which is now always the base of the chain — so
-# `--defaults dev4` behaves like `release::dev4`. This profile only adds dev
-# overlays on top.
-
 overrides:
   # ROOT >= 6.40 is needed on macOS for Apple-clang / Xcode compatibility; other
   # platforms keep the recipe's default ROOT version. The ":osx" matcher (arch

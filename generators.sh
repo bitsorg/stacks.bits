@@ -15,7 +15,7 @@ requires:
   - mcutils
   - mcfm
   - madgraph5amc
-  - powheg-box-v2
+  - "powheg-box-v2:(?!osx)"
   - feynhiggs
   - vbfnlo
   - FORM
