@@ -36,9 +36,9 @@ variables:
   lcgversion: main
 
 requires:
-  lcg.bits
+  - lcg.bits
 
 overrides:
   lcg.bits:
-    tag: %(lcgversion)s
+    tag: "%(lcgversion)s"
 ---
