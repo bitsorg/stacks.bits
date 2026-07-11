@@ -1,33 +1,11 @@
 package: defaults-release
 version: v1
-# Optional: override the architecture-string layout. A literal value or a
-# template using %(os)s (e.g. ubuntu2510), %(machine)s (x86-64, dashed) and
-# %(_machine)s (x86_64, underscore). The built-in default is %(os)s_%(machine)s.
-# An explicit --architecture on the command line always overrides this.
-#   architecture: %(os)s_%(machine)s     # ubuntu2510_x86-64  (default layout)
-#   architecture: %(os)s_%(_machine)s    # ubuntu2510_x86_64
-#   architecture: %(_machine)s-%(os)s    # x86_64-ubuntu2510
-
-# Optional: declare the CVMFS layout once so the build/publish/reuse paths are
-# derived instead of passed as scattered flags. Templates may use
-# %(architecture)s (the effective, combined arch). install_dir / module_dir are
-# relative to cvmfs_dir.
-#   * docker build    -> --cvmfs-prefix defaults to <cvmfs_dir>/<install_dir>
-#   * --reuse-cvmfs   -> --remote-store defaults to cvmfs://<cvmfs_dir>
-# cvmfs_dir:   /cvmfs/sft.cern.ch/lcg/releases
-# install_dir: %(architecture)s/Packages
-# module_dir:  %(architecture)s/modules
-
-# Build-host policy: how the build *runs* (network, CPU), not what it produces.
-# Keys under `system:` are NOT part of any package hash, so changing them never
-# triggers a rebuild — unlike `env:` below, which is hashed.
 system:
   sandbox_network: "off"
   build_oversubscribe: 1.25
-  # CVMFS path templates (this group's structural choice; never hashed).
-  # Recorded in .meta.json; publish resolves {prefix} + {pkg}/{tag}/{platform}.
+  # CVMFS path templates
   prefix:                     "/cvmfs/sft-nightlies-test.cern.ch/lcg/releases"
-  cvmfs_user_prefix:          "/cvmfs/sft-nightlies-test.cern.ch/lcg/user"  # sibling of releases, not {prefix}/user
+  cvmfs_user_prefix:          "/cvmfs/sft-nightlies-test.cern.ch/lcg/user" 
   cvmfs_path_template:        "{prefix}/{pkg}/{tag}/{platform}"
   cvmfs_modules_template:     "{prefix}/{platform}/Modules/modulefiles/{pkg}"
   cvmfs_shared_path_template: "{prefix}/noarch/{pkg}/{tag}"
