@@ -10,13 +10,14 @@ variables:
   release: dev4
 
 overrides:
-  # ROOT >= 6.40 is needed on macOS for Apple-clang / Xcode compatibility; other
-  # platforms keep the recipe's default ROOT version. The ":osx" matcher (arch
-  # regex, anchored at the start of the architecture string) gates this override
-  # to macOS architectures only.
-  "ROOT:osx":
+  # Version pins mirroring lcgcmake heptools-dev4: dev4 pins ROOT to a fixed
+  # release (6.40.00) on ALL platforms — unlike dev3, which tracks ROOT HEAD.
+  ROOT:                                # lcgcmake: LCG_AA_project(ROOT 6.40.00)
     version: "v6.40.00"
     tag: "v6-40-00"
+  java:                                # lcgcmake: java 17.0.19p10
+    version: "17.0.19p10"
+    tag: "17.0.19p10"
 
 disable:
   # GENIE needs ROOT's removed TPythia6/TMCParticle classes (gone after ROOT

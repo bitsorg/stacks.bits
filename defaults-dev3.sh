@@ -11,7 +11,24 @@ variables:
   release: dev3
 
 overrides:
-  # Per-package version pins for this release go here (e.g. ROOT/DD4hep/HepMC3 to
-  # an upstream development tag), on top of whatever the lcg.bits `dev3` branch
-  # already provides. Confirm recipe names/sources against lcg.bits before adding.
+  # Per-package version pins for this release, mirroring lcgcmake heptools-dev3:
+  # the core stack tracks upstream HEAD/master (built from git), on top of whatever
+  # the lcg.bits `dev3` branch provides. version is the label that lands in the
+  # CVMFS path; tag is the git ref built.
+  ROOT:                                # lcgcmake: ROOT HEAD (GIT root.git)
+    source: "https://github.com/root-project/root.git"
+    version: "HEAD"
+    tag: "master"
+  hepmc3:                              # lcgcmake: hepmc3 HEAD (GIT HepMC3.git)
+    source: "https://gitlab.cern.ch/hepmc/HepMC3.git"
+    version: "HEAD"
+    tag: "master"
+  DD4hep:                              # lcgcmake: DD4hep master (GIT DD4hep.git)
+    source: "https://github.com/AIDASoft/DD4hep.git"
+    version: "master"
+    tag: "master"
+  Gaudi:                               # lcgcmake: Gaudi master (GIT Gaudi.git)
+    source: "https://gitlab.cern.ch/gaudi/Gaudi.git"
+    version: "master"
+    tag: "master"
 ---

@@ -39,4 +39,73 @@ requires:
 overrides:
   lcg.bits:
     tag: "%(release)s"
+
+# Package families — the {family} path segment (…/releases/<release>/<family>/<pkg>/…).
+# `bits` assigns each package a family via fnmatch on these lists (first match wins;
+# no `default:`, so everything unlisted is an external and its family collapses out
+# of the path). This mirrors lcgcmake's directory-based grouping: MCGenerators is
+# the set of packages that LIVE in lcgcmake's generators/ tree, NOT the transitive
+# dependency closure of generators.sh (that would sweep in shared externals like
+# boost/python) nor only its direct requires (that would miss libs pulled in
+# transitively, e.g. hepmc3/lhapdf). Names are the exact lcg.bits `package:` values.
+package_family:
+  MCGenerators:
+    - FORM
+    - alpgen
+    - ampt
+    - apfel
+    - baurmc
+    - cepgen
+    - chaplin
+    - collier
+    - crmc
+    - evtgen
+    - feynhiggs
+    - gosam
+    - gosam_contrib
+    - hepmcanalysis
+    - heputils
+    - herwig
+    - hijing
+    - hoppet
+    - hto4l
+    - hydjet
+    - hydjetcpp        # lcgcmake hydjet++
+    - jhu
+    - lhapdf
+    - looptools
+    - madgraph5amc
+    - mctester
+    - mcutils
+    - njet
+    - openloops
+    - photos
+    - photoscpp        # lcgcmake photos++
+    - powheg-box-v2
+    - professor
+    - prophecy4f
+    - pyquen
+    - pythia6
+    - pythia8
+    - qd
+    - qgraf
+    - rapidsim
+    - recola
+    - recola_SM
+    - rivet
+    - sherpa
+    - starlight
+    - superchic
+    - syscalc
+    - tauola
+    - tauolacpp        # lcgcmake tauola++
+    - thep8i
+    - thepeg
+    - vbfnlo
+    - yoda
+    # lcgcmake generators with no lcg.bits recipe yet — listed so they classify
+    # automatically once a recipe is added:
+    - agile
+    - herwig++
+    - jimmy
 ---
