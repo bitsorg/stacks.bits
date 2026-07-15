@@ -34,7 +34,11 @@ requires:
   - calmjs_parse
   - cartopy
   - catboost
-  - ccache
+  # ccache is built and shipped by GCC-Toolchain (libexec/ccache/bin, disabled by
+  # default). The standalone lcg.bits/ccache package built the plain CMakeRecipe
+  # without -DREDIS_STORAGE_BACKEND=OFF, so ccache's CMake took the hiredis path
+  # and left ccache_framework with no sources ("No SOURCES given to target").
+  # Drop the redundant standalone build; the toolchain provides ccache.
   - click_default_group
   - coffea
   - coin3d
