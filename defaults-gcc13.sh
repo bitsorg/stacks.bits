@@ -1,9 +1,10 @@
 package: defaults-gcc13
 version: v1
-# Compiler axis only. No CXXFLAGS here: it exactly duplicated the base profile, so
-# setting it again only risked clobbering base flags in the last-wins env merge
-# without changing anything. gcc13 uses its compiler-default standard; add
-# CXXSTD/-std to CXXFLAGS here only if you want to pin one (as gcc15 does).
+# Compiler axis. Owns the C++ standard for this compiler: gcc13's maximum stable
+# standard is C++20 (C++23 is still experimental in gcc13). The base
+# defaults-release no longer sets -std, so the standard is defined here.
+env:
+  CXXFLAGS: "-fPIC -g -O2 -std=c++20"
 overrides:
   GCC-Toolchain:
     source: https://github.com/alisw/gcc-toolchain

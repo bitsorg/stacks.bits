@@ -16,6 +16,9 @@ version: v1
 env:
   CC: clang
   CXX: clang++
+  # clang 20 (LLVM 20.1.7): maximum stable standard is C++20. The base
+  # defaults-release no longer sets -std, so the standard is defined here.
+  CXXFLAGS: "-fPIC -g -O2 -std=c++20"
 overrides:
   GCC-Toolchain:
     prefer_system: ".*"          # use the image's clang; TODO: confirm for your image
