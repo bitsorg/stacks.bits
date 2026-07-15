@@ -31,4 +31,17 @@ overrides:
     source: "https://gitlab.cern.ch/gaudi/Gaudi.git"
     version: "master"
     tag: "master"
+
+disable:
+  # Same removals as dev4 — dev3 tracks ROOT HEAD (even newer than dev4's 6.40),
+  # so it hits the same breakages.
+  # GENIE needs ROOT's removed TPythia6/TMCParticle classes (gone after ROOT
+  # 6.30); LCG_109 also comments it out. Re-enable once a standalone EGPythia6
+  # package provides those classes.
+  - GENIE
+  # fastnlo_toolkit's fnlo-tk-yodaout uses YODA/HistoBin1D.h, removed in yoda
+  # 2.x; LCG_109 pins no fastnlo version (not built). Re-enable when bumped to a
+  # yoda-2 release or built --without-yoda.
+  - fastnlo_toolkit
+  - compilebox
 ---
