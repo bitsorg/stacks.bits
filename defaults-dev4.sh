@@ -1,11 +1,13 @@
 package: defaults-dev4
 version: v1
-env:
-  CXXFLAGS: "-fPIC -g -O2"
-  CFLAGS: "-fPIC -g -O2"
-  CMAKE_BUILD_TYPE: "RELWITHDEBINFO"
-  MACOSX_DEPLOYMENT_TARGET: '14.0'
-  ENABLE_IPO: 'OFF'
+# The "dev4" release line (mirrors lcgcmake heptools-dev4). Overriding the single
+# `release` label re-points the CVMFS {release} slot, the lcg.bits recipe branch
+# (%(release)s), and the target stacks.bits tag to dev4 together. Build flags
+# (CFLAGS / CMAKE_BUILD_TYPE / MACOSX_DEPLOYMENT_TARGET / ENABLE_IPO) are inherited
+# from defaults-release; the C++ standard comes from the compiler axis — so this
+# file carries only the release label and its package-version overrides.
+variables:
+  release: dev4
 
 overrides:
   # ROOT >= 6.40 is needed on macOS for Apple-clang / Xcode compatibility; other
