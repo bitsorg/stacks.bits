@@ -21,16 +21,17 @@ env:
   ENABLE_IPO: 'OFF'
 
 variables:
-  # THE release label — single source of truth. It names three things at once:
-  #   1. the CVMFS {release} slot in the templates above (baked at build time);
-  #   2. the lcg.bits recipe branch (see the override below): %(release)s;
-  #   3. the tag stacks.bits will converge to for this release.
-  # It is an explicit label, NOT derived from the current branch — a build on any
-  # stacks.bits branch targets whatever release is named here. The value must
-  # exist as an lcg.bits branch (that is the recipe pool). dev3/dev4 override it,
-  # moving the slot AND the branch together. NOT hashed (a variable, so the same
-  # content under dev/dev3/dev4 stays one store object; only its CVMFS home moves).
-  release: dev
+  # THE release label — single source of truth for BOTH the lcg.bits recipe branch
+  # (the override below feeds it as %(release)s) and the CVMFS {release} path slot.
+  # `main` is the trunk sentinel: `bits` resolves the effective release as
+  #   explicit non-trunk release: (dev3/dev4/LCG_NNN) -> working-dir branch -> main
+  # so this default reproduces the old behaviour — build lcg.bits `main`, and,
+  # because a `main` release collapses the {release}/ segment out, publish with no
+  # release level in the path. Check out a recipe branch and the build tracks the
+  # matching lcg.bits branch and publishes under /releases/<branch>/…; set an
+  # explicit release: (dev3/dev4/a tag) to name a dedicated one. The value that is
+  # in effect must exist as an lcg.bits branch — that is the recipe pool.
+  release: main
 
 requires:
   - lcg.bits
