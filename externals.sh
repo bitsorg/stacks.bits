@@ -50,8 +50,9 @@ requires:
   - cppzmq
   - CppUnit
   - cpymad
-  # Oracle: Restricted distribution
-  - "cx_oracle:(?oracle)"
+  # Oracle client: restricted distribution — Linux-only, and (per the license plan)
+  # marked redistributable:false so publish keeps it off public CVMFS (like qgraf).
+  - "cx_oracle:(?!osx)"
   # CERN lxplus batch Dask helper; CERN infra, no consumers.
   - "dask_lxplus:(?!osx)"
   - delphes
@@ -118,9 +119,9 @@ requires:
   - omniorb
   - openai
   - opensearch_py
-  # Oracle: Restricted distribution — built only with the oracle flag
-  # (--defaults …::oracle) and not on osx (defaults-oracle gates the flag to non-osx).
-  - "oracledb:(?oracle)"
+  # Oracle client: restricted distribution — Linux-only, and (per the license plan)
+  # marked redistributable:false so publish keeps it off public CVMFS (like qgraf).
+  - "oracledb:(?!osx)"
   - pacparser
   - pango
   # patchelf patches ELF binaries; macOS uses Mach-O/install_name_tool. Linux-only.

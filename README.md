@@ -127,8 +127,7 @@ The profiles fall on independent **axes**, each contributing an `append_arch` su
 |---|---|---|---|
 | Compiler | `gcc13`, `gcc14`, `gcc15`, `clang` | `GCC-Toolchain` tag (or `prefer_system` for clang) + the C++ standard in `CXXFLAGS` | `-gcc13` … `-clang` |
 | Build type | *(base)*, `dbg` | `CMAKE_BUILD_TYPE` = `RELWITHDEBINFO` / `Debug` | `-dbg` |
-| Feature | `cuda` | CUDA knobs (`ENABLE_CUDA`, never `CXXFLAGS`) | `-cuda` |
-| Feature | `oracle` | adds the Oracle client packages (`oracledb`, `cx_oracle`); Linux-only, changes no build env | *(none — same tree)* |
+| Feature | `cuda` | CUDA knobs (never `CXXFLAGS`) | `-cuda` |
 | Release | *(base)*, `dev3`, `dev4` | the `release` label + per-package version pins | *(none — release is a path level, not an arch suffix)* |
 
 The C++ standard is owned by the **compiler axis** (gcc13/14 → c++20, gcc15 → c++23, clang → c++20), never by the base or the build-type/feature profiles — so `dbg`/`cuda` compose with any compiler without clobbering `-std`.
@@ -271,8 +270,7 @@ The same saved pipeline can also run on a schedule (nightly) or on demand from t
 | `defaults-release.sh` | base: `system:` (paths/store/policy), `env:`, `release` label, `package_family`, requires `lcg.bits` |
 | `defaults-gcc13/14/15.sh`, `defaults-clang.sh` | compiler axis (toolchain tag + C++ standard) |
 | `defaults-dbg.sh` | `Debug` build type |
-| `defaults-cuda.sh` | CUDA feature knobs (`-cuda` tree) |
-| `defaults-oracle.sh` | oracle flag: adds `oracledb`/`cx_oracle` (Linux-only, same tree) |
+| `defaults-cuda.sh` | CUDA feature knobs |
 | `defaults-dev3.sh`, `defaults-dev4.sh` | release lines: `release` label + heptools-devN version pins |
 | `externals.sh`, `generators.sh` | meta-packages that pull in the externals / generator sets |
 
