@@ -10,11 +10,12 @@ system:
   # Recipes with only one source form are unaffected. Not hashed itself — the
   # resulting source/tag/commit differences already drive each package's hash.
   source_mode: "tar"
-  # CVMFS path templates (lcgcmake layout):
-  #   releases/<release>/[<family>/]<pkg>/<tag>/<platform>
-  # {release} is baked by the build; {family} is per package (empty for externals,
-  # "MCGenerators/" for generators — it carries its own trailing slash).
-  prefix:                     "/cvmfs/sft-nightlies-test.cern.ch/lcg"
+  # CVMFS path LAYOUT (lcgcmake: releases/<release>/[<family>/]<pkg>/<tag>/<platform>).
+  # {release} is baked by the build; {family} is per package. {prefix} is the group
+  # ROOT and is NOT declared here — it is an authorization boundary supplied by
+  # bits-console (communities/<group>/ui-config.yaml: cvmfs_prefix), so a recipe
+  # cannot redirect a build into another group's namespace. Only the layout below
+  # the prefix lives here.
   cvmfs_user_prefix:          "{prefix}/user"
   cvmfs_releases_template:    "{prefix}/releases/{release}/{family}{pkg}/{tag}/{platform}"
   cvmfs_modules_template:     "{prefix}/releases/{release}/{platform}/Modules/modulefiles/{pkg}"
