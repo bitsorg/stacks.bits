@@ -3,6 +3,13 @@ version: v1
 system:
   sandbox_network: "off"
   build_oversubscribe: 1.25
+  # Which source a recipe that declares BOTH a git source (source:/tag:) and cached
+  # tarball sources (sources:) builds from: "tar" (default — reproducible cached
+  # tarballs) or "git" (clone the upstream repo at tag:). A group flips this here to
+  # switch its whole stack; a one-off build can override with BITS_SOURCE_MODE.
+  # Recipes with only one source form are unaffected. Not hashed itself — the
+  # resulting source/tag/commit differences already drive each package's hash.
+  source_mode: "tar"
   # CVMFS path templates (lcgcmake layout):
   #   releases/<release>/[<family>/]<pkg>/<tag>/<platform>
   # {release} is baked by the build; {family} is per package (empty for externals,
