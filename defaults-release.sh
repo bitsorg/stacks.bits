@@ -12,10 +12,13 @@ system:
   source_mode: "tar"
   # CVMFS path LAYOUT (lcgcmake: releases/<release>/[<family>/]<pkg>/<tag>/<platform>).
   # {release} is baked by the build; {family} is per package. {prefix} is the group
-  # ROOT and is NOT declared here — it is an authorization boundary supplied by
-  # bits-console (communities/<group>/ui-config.yaml: cvmfs_prefix), so a recipe
-  # cannot redirect a build into another group's namespace. Only the layout below
-  # the prefix lives here.
+  # ROOT — an AUTHORIZATION boundary. bits-console (communities/<group>/ui-config.yaml:
+  # cvmfs_prefix) injects the authoritative value at build time and it WINS. The value
+  # below MUST agree with it: bits-admins keep the two in sync via PR, and any build
+  # injected with a different prefix REFUSES to publish (fail-closed). It exists here
+  # so local `bits build` (no injection) works and as a checked declaration; it cannot
+  # be used to redirect into another namespace (injected wins + prepub containment).
+  prefix:                     "/cvmfs/sft-nightlies-test.cern.ch/lcg"
   cvmfs_user_prefix:          "{prefix}/user"
   cvmfs_releases_template:    "{prefix}/releases/{release}/{family}{pkg}/{tag}/{platform}"
   cvmfs_modules_template:     "{prefix}/releases/{release}/{platform}/Modules/modulefiles/{pkg}"
