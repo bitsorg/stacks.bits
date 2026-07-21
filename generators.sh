@@ -51,7 +51,10 @@ requires:
   - recola_SM_ATGC_WARSAW
   - RELAX
   - unigen
-  - GENIE
+  # GENIE dropped: 2.12.6 needs ROOT's built-in Pythia6 interface, removed
+  # upstream in ROOT 6.36. GENIE is only used by SHiP, which owns its own
+  # recipe (ship.bits: GENIE 3 + ROOTEGPythia6) — experiments provide such
+  # dependencies themselves rather than shaping the common ROOT build.
   - babayaga
   - bhlumi
   - cepgen
