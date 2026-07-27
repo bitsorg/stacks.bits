@@ -18,7 +18,7 @@ system:
   # injected with a different prefix REFUSES to publish (fail-closed). It exists here
   # so local `bits build` (no injection) works and as a checked declaration; it cannot
   # be used to redirect into another namespace (injected wins + prepub containment).
-  prefix:                     "/cvmfs/sft-nightlies-test.cern.ch/lcg"
+  prefix:                     "/cvmfs/bits.cern.ch/lcg"
   cvmfs_user_prefix:          "{prefix}/user"
   cvmfs_releases_template:    "{prefix}/releases/{release}/{family}{pkg}/{tag}/{platform}"
   cvmfs_modules_template:     "{prefix}/releases/{release}/{platform}/Modules/modulefiles/{pkg}"
