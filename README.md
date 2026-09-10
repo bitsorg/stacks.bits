@@ -238,7 +238,7 @@ bits certify …                # merges published build manifests into ONE comm
 bits store ls   --arch A --group G --package P --version V   # list (manifest-aware selection)
 bits store verify [--arch A] [--deep] [--orphans]            # integrity check vs manifests
 bits store rm   <selection> [-n]                             # delete (e.g. --orphans, --expired); -n dry-run
-bits gc                                                      # reachability GC: roots = hashes in the
+bits store gc                                                # reachability GC: roots = hashes in the
                                                             #   verified signed manifest; fail-closed
 ```
 
