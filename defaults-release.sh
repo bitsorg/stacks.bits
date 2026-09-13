@@ -114,6 +114,21 @@ package_family:
     - thepeg
     - vbfnlo
     - yoda
+    # LCG_110_ATLAS_5 MCGenerators members, reconciled from the release manifest
+    # (LCG_generators_<plat>.txt dir field = ./MCGenerators/<pkg>/...). Without
+    # these they classified flat, diverging from the ATLAS release layout.
+    - compilebox
+    - contur
+    - epos4
+    - ggvvamp
+    - herwig3
+    - mcfm
+    - nlox
+    - pepper_kokkos
+    - qqvvamp
+    - recola_SM_ATGC_WARSAW
+    - SFGen
+    - sherpa-openmpi
     # lcgcmake generators with no lcg.bits recipe yet — listed so they classify
     # automatically once a recipe is added:
     - agile
