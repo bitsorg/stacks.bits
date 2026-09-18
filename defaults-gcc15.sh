@@ -11,7 +11,7 @@ env:
   CXXFLAGS: "-fPIC -g -O2 -std=c++${CXXSTD:-23}"
 overrides:
   GCC-Toolchain:
-    source: https://github.com/alisw/gcc-toolchain
+    source: https://gitlab.cern.ch/bits/gcc-toolchain
     tag: v15.2.0-alice1
 # Compiler tag ONLY — the debug axis lives in defaults-dbg (append_arch: -dbg).
 # Fusing them here (the old "-gcc15-dbg") made every gcc15 build claim the debug
