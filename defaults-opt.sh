@@ -13,4 +13,8 @@ env:
 # Distinct store hashes (env is hashed) AND a distinct CVMFS tree, so an opt build
 # and its dbg sibling never overwrite each other.
 append_arch: -opt
+# own_hash packages (the toolchain) are build-type-invariant, so they drop
+# this qualifier from their store/deploy arch: one compiler build serves both
+# opt and dbg instead of forking a separate toolchain per build type.
+own_hash_neutral: true
 ---
