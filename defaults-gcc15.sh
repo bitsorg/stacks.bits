@@ -12,7 +12,7 @@ env:
 overrides:
   GCC-Toolchain:
     source: https://gitlab.cern.ch/bits/gcc-toolchain
-    tag: v15.2.0-alice1
+    tag: v15.3.0-alice2
 # Compiler tag ONLY — the debug axis lives in defaults-dbg (append_arch: -dbg).
 # Fusing them here (the old "-gcc15-dbg") made every gcc15 build claim the debug
 # tree, so an opt gcc15 build and a debug one collided on the same CVMFS path.

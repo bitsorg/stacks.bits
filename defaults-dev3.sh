@@ -14,7 +14,7 @@ overrides:
   # Per-package version pins for this release, mirroring lcgcmake heptools-dev3:
   # the core stack tracks upstream master (built from git), on top of whatever the
   # lcg.bits `dev3` branch provides. Sources are the git repos used by the git-ready
-  # recipes (root.sh; common.bits hepmc3/dd4hep; lhcb.bits gaudi). Following that
+  # recipes (root.sh; common.bits hepmc3/dd4hep). Following that
   # same idiom, version derives from the tag (%(tag_basename)s → "master"), which is
   # the label that lands in the CVMFS path; tag is the git ref built.
   ROOT:                                # lcgcmake: ROOT HEAD (GIT root.git)
@@ -27,10 +27,6 @@ overrides:
     tag: "master"
   DD4hep:                              # lcgcmake: DD4hep master (GIT DD4hep.git)
     source: "https://github.com/AIDASoft/DD4hep.git"
-    version: "%(tag_basename)s"
-    tag: "master"
-  Gaudi:                               # lcgcmake: Gaudi master (GIT Gaudi.git)
-    source: "https://gitlab.cern.ch/gaudi/Gaudi.git"
     version: "%(tag_basename)s"
     tag: "master"
 
