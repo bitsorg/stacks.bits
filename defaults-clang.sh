@@ -19,8 +19,14 @@ env:
   # clang 20 (LLVM 20.1.7): maximum stable standard is C++20. The base
   # defaults-release no longer sets -std, so the standard is defined here.
   CXXFLAGS: "-fPIC -g -O2 -std=c++20"
+requires:
+  # The clang compiler axis: presence + (Linux) version probe. prefer_system, so
+  # it is disabled/pruned when the environment supplies a suitable clang.
+  - Clang-Toolchain
 overrides:
   GCC-Toolchain:
-    prefer_system: ".*"          # use the image's clang; TODO: confirm for your image
+    # gcc is still needed on Linux for libstdc++ and gfortran, so keep it as a
+    # system package alongside clang (do not build it for a clang build).
+    prefer_system: ".*"
 append_arch: -clang
 ---

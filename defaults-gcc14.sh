@@ -11,8 +11,8 @@ env:
   CXXFLAGS: "-fPIC -g -O2 -std=c++20"
 overrides:
   GCC-Toolchain:
-    source: https://github.com/alisw/gcc-toolchain
-    tag: v14.2.0-alice1          # TODO: confirm the tag you actually build
+    source: https://gitlab.cern.ch/bits/gcc-toolchain
+    tag: v14.2.0-alice2
 # Appended verbatim to the arch string (the leading '-' is the separator; bits
 # does not assume one). Gives this compiler its own store hashes AND its own
 # CVMFS install tree, so gcc14 never overwrites gcc13/gcc15 on deployment.

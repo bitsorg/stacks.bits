@@ -302,7 +302,6 @@ requires:
   - grpcio_status
   - hep_flare
   - hls4ml
-  - iwyu
   - jupyter_contrib_nbextensions
   - kfp
   - libedit

@@ -18,14 +18,13 @@ system:
   # injected with a different prefix REFUSES to publish (fail-closed). It exists here
   # so local `bits build` (no injection) works and as a checked declaration; it cannot
   # be used to redirect into another namespace (injected wins + prepub containment).
-  prefix:                      "/cvmfs/sft-nightlies-test.cern.ch/lcg/bits"
-  cvmfs_user_prefix:           "{prefix}/user"
-  cvmfs_releases_template:     "{prefix}/{platform}/Packages/{pkg}/{tag}"
-  cvmfs_modules_template:      "{prefix}/{platform}/Modules/modulefiles/{pkg}"
-  cvmfs_shared_path_template:  "{prefix}/noarch/{pkg}/{tag}"
+  prefix:                     "/cvmfs/bits.cern.ch/lcg"
+  cvmfs_user_prefix:          "{prefix}/user"
+  cvmfs_releases_template:    "{prefix}/releases/{release}/{family}{pkg}/{tag}/{platform}"
+  cvmfs_modules_template:     "{prefix}/releases/{release}/{platform}/Modules/modulefiles/{pkg}"
+  cvmfs_shared_path_template: "{prefix}/releases/{release}/noarch/{pkg}/{tag}"
 
 env:
-  CXXFLAGS: "-fPIC -g -O2"
   CFLAGS: "-fPIC -g -O2"
   CMAKE_BUILD_TYPE: "RELWITHDEBINFO"
   MACOSX_DEPLOYMENT_TARGET: '14.0'
@@ -114,6 +113,21 @@ package_family:
     - thepeg
     - vbfnlo
     - yoda
+    # LCG_110_ATLAS_5 MCGenerators members, reconciled from the release manifest
+    # (LCG_generators_<plat>.txt dir field = ./MCGenerators/<pkg>/...). Without
+    # these they classified flat, diverging from the ATLAS release layout.
+    - compilebox
+    - contur
+    - epos4
+    - ggvvamp
+    - herwig3
+    - mcfm
+    - nlox
+    - pepper_kokkos
+    - qqvvamp
+    - recola_SM_ATGC_WARSAW
+    - SFGen
+    - sherpa-openmpi
     # lcgcmake generators with no lcg.bits recipe yet — listed so they classify
     # automatically once a recipe is added:
     - agile

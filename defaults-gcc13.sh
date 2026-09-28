@@ -7,7 +7,7 @@ env:
   CXXFLAGS: "-fPIC -g -O2 -std=c++20"
 overrides:
   GCC-Toolchain:
-    source: https://github.com/alisw/gcc-toolchain
+    source: https://gitlab.cern.ch/bits/gcc-toolchain
     tag: v13.2.0-alice1
 # Appended verbatim to the arch string; the leading '-' is the separator (bits
 # does not assume one). Distinct store hashes AND CVMFS tree per compiler.
