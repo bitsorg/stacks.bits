@@ -2,13 +2,12 @@ package: defaults-nightly
 version: v1
 # Nightly LAYOUT overlay — compose LAST, before the stream:
 #   --defaults gcc15::opt::nightly::dev4
-# Redirects the CVMFS publish path from releases/{release}/ to
-# nightlies/{release}/{day}/ (the LCG nightly layout). system: is NOT hashed, so
-# nightly-vs-release changes only WHERE a package deploys, never its identity:
-# the same (platform,hash) tarball is shared and referenced into the nightly tree.
+# Moves the release VIEWS from releases/{release}/ to nightlies/{release}/{day}/
+# and views/{release}/{day}/ (the LCG nightly layout). Packages keep their one
+# shared home ({prefix}/{arch}/Packages), so a nightly publishes only what
+# changed. system: is NOT hashed: nightly-vs-release never changes identity.
 # {day} is filled by bits (auto UTC weekday, or --day) and collapses when unset.
 system:
-  cvmfs_releases_template:    "{prefix}/nightlies/{release}/{day}/{family}{pkg}/{tag}/{platform}"
-  cvmfs_modules_template:     "{prefix}/nightlies/{release}/{day}/{platform}/Modules/modulefiles/{pkg}"
-  cvmfs_shared_path_template: "{prefix}/nightlies/{release}/{day}/noarch/{pkg}/{tag}"
+  cvmfs_releases_template:    "{prefix}/nightlies/{release}/{day}/{family}{pkg}/{version}/{arch}"
+  cvmfs_views_template:       "{prefix}/views/{release}/{day}/{arch}"
 ---

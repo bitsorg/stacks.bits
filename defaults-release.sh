@@ -10,7 +10,13 @@ system:
   # Recipes with only one source form are unaffected. Not hashed itself — the
   # resulting source/tag/commit differences already drive each package's hash.
   source_mode: "tar"
-  # CVMFS path LAYOUT (lcgcmake: releases/<release>/[<family>/]<pkg>/<tag>/<platform>).
+  # Layout (as key4hep.bits): packages are published ONCE per build arch under
+  # {prefix}/{arch}/Packages/<pkg>/<version-revision>, modulefiles beside them;
+  # an unchanged package is not sent again. A release is a view of symlinks to
+  # them, releases/<release>/[<family>/]<pkg>/<version>/<arch>, plus a merged
+  # view at views/<release>/<arch>; both are made only when asked for
+  # (bits cvmfs publish --release-view / console option). {arch} is the build
+  # arch (x86_64-el9-gcc14-opt), so compilers/build types never collide.
   # {release} is baked by the build; {family} is per package. {prefix} is the group
   # ROOT — an AUTHORIZATION boundary. bits-console (communities/<group>/ui-config.yaml:
   # cvmfs_prefix) injects the authoritative value at build time and it WINS. The value
@@ -20,9 +26,11 @@ system:
   # be used to redirect into another namespace (injected wins + prepub containment).
   prefix:                     "/cvmfs/bits.cern.ch/lcg"
   cvmfs_user_prefix:          "{prefix}/user"
-  cvmfs_releases_template:    "{prefix}/releases/{release}/{family}{pkg}/{tag}/{platform}"
-  cvmfs_modules_template:     "{prefix}/releases/{release}/{platform}/Modules/modulefiles/{pkg}"
-  cvmfs_shared_path_template: "{prefix}/releases/{release}/noarch/{pkg}/{tag}"
+  cvmfs_packages_template:    "{prefix}/{arch}/Packages/{pkg}/{tag}"
+  cvmfs_modules_template:     "{prefix}/{arch}/Modules/modulefiles/{pkg}"
+  cvmfs_shared_path_template: "{prefix}/noarch/{pkg}/{tag}"
+  cvmfs_releases_template:    "{prefix}/releases/{release}/{family}{pkg}/{version}/{arch}"
+  cvmfs_views_template:       "{prefix}/views/{release}/{arch}"
 
 env:
   CFLAGS: "-fPIC -g -O2"
