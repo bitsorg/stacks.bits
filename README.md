@@ -57,7 +57,7 @@ source: https://github.com/bitsorg/lcg.bits
 | Release (`dev3`, `dev4`, `LCG_107`) as a path level | the `{release}` slot in the CVMFS templates | `defaults-devN` / branch / tag |
 | `heptools-devN.cmake` (version pins for a release) | `defaults-devN` `overrides:` | this repo |
 | `generators/` directory grouping | `package_family: MCGenerators` (fnmatch list) | `defaults-release` |
-| `/cvmfs/…/lcg/releases/<LCG_VERSION>/[<group>/]<pkg>/<ver>/<platform>` | `…/releases/<release>/<family>/<pkg>/<tag>/<platform>` | `defaults-release` templates |
+| `/cvmfs/…/lcg/releases/<LCG_VERSION>/[<group>/]<pkg>/<ver>/<platform>` | `…/releases/<release>/[<family>/]<pkg>/<version>/<arch>`: symlinks to `…/<arch>/Packages/<pkg>/<tag>` | `defaults-release` templates |
 | `LCG_external_package` / `LCG_AA_project` version | recipe `version:`/`tag:` in `lcg.bits`, overridable per release | `lcg.bits` + `defaults-devN` |
 
 ---
@@ -84,9 +84,11 @@ The **`system:` block** holds everything about *where and how* things build and 
 |---|---|
 | `sandbox_network` | build-sandbox network policy (`on`/`off`); recipes may still override per package |
 | `build_oversubscribe` | parallelism factor (e.g. `1.25` → `-j` slightly above core count) |
-| `prefix` | the CVMFS root, e.g. `/cvmfs/sft-nightlies-test.cern.ch/lcg` |
+| `prefix` | the CVMFS root, e.g. `/cvmfs/bits.cern.ch/lcg` |
 | `cvmfs_user_prefix` | root for per-user (non-admin) publishes: `<user_prefix>/<login>` |
-| `cvmfs_releases_template` | per-package publish path (tokens `{release}`,`{family}`,`{pkg}`,`{tag}`,`{platform}`) |
+| `cvmfs_packages_template` | where each package is published, once per build arch (tokens `{arch}`,`{pkg}`,`{tag}`) |
+| `cvmfs_releases_template` | release view: symlinks to the packages (tokens `{release}`,`{family}`,`{pkg}`,`{version}`,`{arch}`) |
+| `cvmfs_views_template` | the release's merged view (`bin/ lib/ include/ …` + `setup.sh`) |
 | `cvmfs_modules_template` | modulefile publish path |
 | `cvmfs_shared_path_template` | noarch/shared publish path |
 | `remote_store` | the **S3 content store** for reuse + upload, e.g. `b3://<bucket>::rw` (see [The S3 Content Store](#the-s3-content-store--certification)) |
@@ -96,13 +98,15 @@ The **`system:` block** holds everything about *where and how* things build and 
 The current templates:
 
 ```
-prefix:   /cvmfs/sft-nightlies-test.cern.ch/lcg
-releases: {prefix}/releases/{release}/{family}{pkg}/{tag}/{platform}
-shared:   {prefix}/releases/{release}/noarch/{pkg}/{tag}
-modules:  {prefix}/releases/{release}/{platform}/Modules/modulefiles/{pkg}
+prefix:   /cvmfs/bits.cern.ch/lcg
+packages: {prefix}/{arch}/Packages/{pkg}/{tag}
+modules:  {prefix}/{arch}/Modules/modulefiles/{pkg}
+shared:   {prefix}/noarch/{pkg}/{tag}
+releases: {prefix}/releases/{release}/{family}{pkg}/{version}/{arch}
+views:    {prefix}/views/{release}/{arch}
 ```
 
-`{release}` collapses out when it is the trunk (`main`), and `{family}` collapses for externals — so a plain external on the default line lands at `…/releases/<pkg>/<tag>/<platform>`, exactly the pre-release layout.
+Packages are published once per build arch (`{arch}`, e.g. `x86_64-el9-gcc14-opt`) under their version-revision `{tag}`; a package already there is not sent again. A release is a view of symlinks to them under `releases/<release>/`, plus a merged view under `views/<release>/<arch>`, both made only when asked for (`bits cvmfs publish --release-view`). `{release}` collapses out when it is the trunk (`main`), and `{family}` collapses for externals.
 
 > `stacks.bits` does not set `remote_store`/`certify_group`/`manifests_remote` itself — locally you pass the store on the command line (or `~/.bits/s3keys`), and in CI bits-console supplies them as job variables. 
 
@@ -146,7 +150,7 @@ One value — the `release` label — names **three things at once**: the CVMFS 
 2. else the **working-directory branch name** (`-patches` stripped, so `LCG_107-patches` → `LCG_107`),
 3. else **`main`** — the default: build `lcg.bits` `main`, and (because `main` collapses out of the path) publish with no release level (old behaviour).
 
-The effective release **must exist as an `lcg.bits` branch** — that branch *is* the recipe pool. Check out `feature-x` in your working copy and the build tracks `lcg.bits` `feature-x` and publishes under `…/releases/feature-x/…`, isolated from `main`. `dev3`/`dev4` move the branch **and** the slot together.
+The effective release **must exist as an `lcg.bits` branch** — that branch *is* the recipe pool. Check out `feature-x` in your working copy and the build tracks `lcg.bits` `feature-x` and, when a release view is made, links it under `…/releases/feature-x/…`; the packages themselves share the one `…/<arch>/Packages` tree, each under its own version-revision. `dev3`/`dev4` move the branch **and** the slot together.
 
 ---
 
@@ -214,7 +218,7 @@ bits build generators --defaults gcc15        # event generators (MCGenerators f
 Three artefacts, deliberately separate:
 
 - **S3 content store** — a *content-addressed* cache of build tarballs (`TARS/<arch>/store/<hash>/…`, hash-only). Identical inputs → identical hash → identical binary, so any builder can **reuse** a prebuilt package instead of rebuilding. This is why the store exists: it makes builds fast and reproducible across machines and CI, and it's the substrate certification trusts. Configured via `system.remote_store` (`b3://<bucket>::rw`); credentials in `~/.bits/s3keys` (or `$BITS_AWS_KEYS_FILE`), store override `$BITS_S3_STORE`.
-- **CVMFS release tree** — the *path-addressed* deployment users actually mount (`…/releases/<release>/<family>/<pkg>/<tag>/<platform>`).
+- **CVMFS tree** — the *path-addressed* deployment users actually mount: packages at `…/<arch>/Packages/<pkg>/<tag>`, releases as symlink views at `…/releases/<release>/[<family>/]<pkg>/<version>/<arch>`.
 - **Signed common manifest** — the *trust unit*: what a client verifies before reusing a binary.
 
 Reuse happens automatically at build time: for each dependency `bits` resolves a hash and, if that object is already in the store (`from_remote_store`, with `--check-store`), downloads it rather than building. A finished build uploads its tarball for the next consumer. (`bits build --reuse-policy relaxed --reuse-base <build_id>` can graft a deployed release's binaries.)
