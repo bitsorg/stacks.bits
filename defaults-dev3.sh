@@ -1,21 +1,21 @@
 package: defaults-dev3
 version: v1
-# The "dev3" release line (mirrors lcgcmake heptools-dev3). Overriding the single
-# `release` label re-points THREE things at once to dev3: the CVMFS {release}
-# slot, the lcg.bits recipe branch (overrides: lcg.bits: tag: "%(release)s" in
-# defaults-release), and the target stacks.bits tag. This replaces the old
-# `append_arch: -dev3` — a release is a path level, not a platform suffix
-# (lcgcmake BINARY_TAG is arch-os-comp-buildtype only). The C++ standard/toolchain
-# still come from the compiler axis (defaults-gccNN / defaults-clang).
-variables:
-  release: dev3
+# The "dev3" nightly stream (mirrors lcgcmake heptools-dev3). It does NOT change
+# `release`: the recipes come from whatever lcg.bits branch `release` selects
+# (e.g. --set release=LCG_110), and only the packages below follow the head of
+# their development branch. Its views go to nightlies/dev3/{day}/ and
+# views/dev3/{day}/ so dev3 and dev4 never collide; {day} is filled by bits
+# (UTC weekday, or --day). system: is not hashed. The C++ standard/toolchain
+# come from the compiler axis (defaults-gccNN / defaults-clang).
+system:
+  cvmfs_releases_template:    "{prefix}/nightlies/dev3/{day}/{family}{pkg}/{version}/{arch}"
+  cvmfs_views_template:       "{prefix}/views/dev3/{day}/{arch}"
 
 overrides:
-  # Per-package version pins for this release, mirroring lcgcmake heptools-dev3:
-  # the core stack tracks upstream master (built from git), on top of whatever the
-  # lcg.bits `dev3` branch provides. Sources are the git repos used by the git-ready
-  # recipes (root.sh; common.bits hepmc3/dd4hep). Following that
-  # same idiom, version derives from the tag (%(tag_basename)s → "master"), which is
+  # Per-package pins mirroring lcgcmake heptools-dev3: the core stack tracks
+  # upstream master (built from git), on top of the release branch's recipes.
+  # Sources are the git repos used by the git-ready recipes (root.sh; common.bits
+  # hepmc3/dd4hep). version derives from the tag (%(tag_basename)s → "master"),
   # the label that lands in the CVMFS path; tag is the git ref built.
   ROOT:                                # lcgcmake: ROOT HEAD (GIT root.git)
     source: "https://github.com/root-project/root.git"

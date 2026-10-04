@@ -142,7 +142,7 @@ Profiles are combined with `::`. `release` (`defaults-release.sh`) is always the
 | Compiler | `gcc13`, `gcc14`, `gcc15`, `clang` | `GCC-Toolchain` tag (`v13.2.0-alice1`, `v14.2.0-alice2`, `v15.3.0-bits1`), or clang with the system gcc runtime; the C++ standard (C++20, C++23 for gcc15) | `-gcc13` … `-clang` |
 | Build type | `opt`, `dbg` | `CMAKE_BUILD_TYPE` = `RELWITHDEBINFO` / `Debug` | `-opt` / `-dbg` |
 | Feature | `cuda` | `ENABLE_CUDA`, `CMAKE_CUDA_ARCHITECTURES` | `-cuda` |
-| Release line | `dev3`, `dev4` | the `release` label and that line's version pins (dev3: ROOT, HepMC3, DD4hep from master; dev4: ROOT 6.40.00) | none |
+| Nightly stream | `dev3`, `dev4` | version pins on top of the `release` branch (dev3: ROOT, HepMC3, DD4hep from master; dev4: ROOT 6.40.00) and the nightly paths `nightlies/devN/{day}/` | none |
 | Layout | `nightly` | release views under `nightlies/{release}/{day}/` | none |
 
 The C++ standard is owned by the **compiler axis** (gcc13/14 → c++20, gcc15 → c++23, clang → c++20), never by the base or the build-type/feature profiles — so `dbg`/`cuda` compose with any compiler without clobbering `-std`.
@@ -185,7 +185,7 @@ bits build ROOT      --defaults gcc15::dbg --set release=LCG_110   # x86_64-el9-
 bits build externals --defaults gcc14::opt::cuda --set release=LCG_110
 ```
 
-(The architecture names assume `--architecture x86_64-el9`, as recorded above.) Packages are reused across groups only when the compiler and build type match as well: Key4hep, SHiP and ATLAS use `gcc15`, LHCb uses `gcc14`. A `dev4` nightly would be `--defaults gcc15::opt::nightly::dev4`; it needs an `lcg.bits` `dev4` branch, which does not exist yet.
+(The architecture names assume `--architecture x86_64-el9`, as recorded above.) Packages are reused across groups only when the compiler and build type match as well: Key4hep, SHiP and ATLAS use `gcc15`, LHCb uses `gcc14`. A `dev4` nightly is `--defaults gcc15::opt::dev4 --set release=LCG_110`: the LCG_110 recipes with the dev4 pins, published under `nightlies/dev4/{day}/`. A plain release-branch nightly adds `nightly` instead: `--defaults gcc15::opt::nightly --set release=LCG_110`.
 
 The base sets no `-std`: the compiler profile owns the C++ standard, and `dbg`, `opt` and `cuda` never touch `CXXFLAGS`, so they combine with any compiler. A compiler profile is therefore needed for a complete build. Profiles are merged left to right (later scalars win); see [Defaults Profiles](https://github.com/bitsorg/bits/blob/main/docs/REFERENCE.md#18-defaults-profiles).
 
@@ -193,11 +193,11 @@ The base sets no `-std`: the compiler profile owns the C++ standard, and `dbg`, 
 
 One value, `release`, names both the `lcg.bits` branch to build against (`overrides: lcg.bits: tag: "%(release)s"` in `defaults-release.sh`) and the `{release}` level of the CVMFS path. `bits` resolves it, highest precedence first:
 
-1. `--set release=LCG_110` on the command line, or an explicit `release:` in a chosen profile (`dev3`, `dev4`);
+1. `--set release=LCG_110` on the command line, or an explicit `release:` in a chosen profile;
 2. the branch of this checkout, with a trailing `-patches` stripped (`LCG_110-patches` gives `LCG_110`);
 3. `main`: build `lcg.bits` `main` and publish with no release level in the path.
 
-Prefer `--set release=…`. It is what every stacks-based community uses, and since a `--set` value also enters the package hashes, choosing the release another way builds packages that are not reused from what other groups built. The release must exist as an `lcg.bits` branch: currently `main` and `LCG_110` (and `devel`). `dev3` and `dev4` need `lcg.bits` branches of the same name, which do not exist yet.
+Prefer `--set release=…`. It is what every stacks-based community uses, and since a `--set` value also enters the package hashes, choosing the release another way builds packages that are not reused from what other groups built. The release must exist as an `lcg.bits` branch: currently `main` and `LCG_110` (and `devel`). The `dev3`/`dev4` streams do not change the release; they add pins on top of it.
 
 ### CVMFS layout
 
@@ -226,7 +226,8 @@ bits cvmfs-path --defaults gcc14::opt --set release=LCG_110 --admin --kind relea
 | `BINARY_TAG` `arch-os-comp-buildtype` | architecture + `append_arch` suffixes, e.g. `…-gcc14-opt` |
 | `LCG_COMP` / `LCG_COMPVERS` | `defaults-gcc13/14/15`, `defaults-clang` |
 | `LCG_BUILD_TYPE` (`opt`, `dbg`) | `defaults-opt`, `defaults-dbg` |
-| Release (`dev3`, `dev4`, `LCG_110`) | the `release` label: `lcg.bits` branch and `{release}` path level |
+| Release (`LCG_110`) | the `release` label: `lcg.bits` branch and `{release}` path level |
+| Nightly stream (`dev3`, `dev4`) | `defaults-dev3/dev4`: pins on top of the release, `nightlies/devN/{day}/` paths |
 | `heptools-devN.cmake` version pins | `overrides:` in `defaults-dev3/dev4` |
 | `generators/` grouping | `package_family: MCGenerators` in `defaults-release.sh` |
 | `LCG_external_package` versions | recipe `version:`/`tag:` in `lcg.bits` |
@@ -309,7 +310,7 @@ The same saved pipeline can also run on a schedule (nightly) or on demand from t
 | `defaults-gcc13/14/15.sh`, `defaults-clang.sh` | compiler axis |
 | `defaults-opt.sh`, `defaults-dbg.sh` | build-type axis |
 | `defaults-cuda.sh` | CUDA feature |
-| `defaults-dev3.sh`, `defaults-dev4.sh` | release lines with their version pins and disabled packages |
+| `defaults-dev3.sh`, `defaults-dev4.sh` | nightly streams: version pins, disabled packages and nightly paths, on top of the release |
 | `defaults-nightly.sh` | nightly view layout |
 | `externals.sh`, `generators.sh` | meta-packages for the externals and the generator set |
 
