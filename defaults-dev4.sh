@@ -1,13 +1,14 @@
 package: defaults-dev4
 version: v1
-# The "dev4" release line (mirrors lcgcmake heptools-dev4). Overriding the single
-# `release` label re-points the CVMFS {release} slot, the lcg.bits recipe branch
-# (%(release)s), and the target stacks.bits tag to dev4 together. Build flags
-# (CFLAGS / CMAKE_BUILD_TYPE / MACOSX_DEPLOYMENT_TARGET / ENABLE_IPO) are inherited
-# from defaults-release; the C++ standard comes from the compiler axis — so this
-# file carries only the release label and its package-version overrides.
-variables:
-  release: dev4
+# The "dev4" nightly stream (mirrors lcgcmake heptools-dev4). It does NOT change
+# `release`: the recipes come from whatever lcg.bits branch `release` selects
+# (e.g. --set release=LCG_110), and only the packages below are pinned to fixed
+# tags. Its views go to nightlies/dev4/{day}/ and views/dev4/{day}/; {day} is
+# filled by bits (UTC weekday, or --day). system: is not hashed. Build flags are
+# inherited from defaults-release; the C++ standard comes from the compiler axis.
+system:
+  cvmfs_releases_template:    "{prefix}/nightlies/dev4/{day}/{family}{pkg}/{version}/{arch}"
+  cvmfs_views_template:       "{prefix}/views/dev4/{day}/{arch}"
 
 overrides:
   # Version pins mirroring lcgcmake heptools-dev4: dev4 pins ROOT to a fixed
