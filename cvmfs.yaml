@@ -1,0 +1,10 @@
+# CVMFS layout of this recipe repository (bits reads it with its defaults; a key
+# set in a defaults-*.sh wins, e.g. the nightly profiles' releases and views).
+
+prefix:                     "/cvmfs/bits.cern.ch/lcg"
+cvmfs_user_prefix:          "{prefix}/user"
+cvmfs_packages_template:    "{prefix}/{arch}/Packages/{pkg}/{tag}"
+cvmfs_modules_template:     "{prefix}/{arch}/Modules/modulefiles/{pkg}"
+cvmfs_shared_path_template: "{prefix}/noarch/{pkg}/{tag}"
+cvmfs_releases_template:    "{prefix}/releases/{release}/{family}{pkg}/{version}/{arch}"
+cvmfs_views_template:       "{prefix}/views/{release}/{arch}"
