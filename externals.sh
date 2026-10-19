@@ -50,8 +50,8 @@ requires:
   - cppzmq
   - CppUnit
   - cpymad
-  # Oracle client: restricted distribution — Linux-only, and (per the license plan)
-  # marked redistributable:false so publish keeps it off public CVMFS (like qgraf).
+  # Oracle client bindings: Linux-only (the Instant Client they need is
+  # redistributable: binaries).
   - "cx_oracle:(?!osx)"
   # CERN lxplus batch Dask helper; CERN infra, no consumers.
   - "dask_lxplus:(?!osx)"
@@ -119,8 +119,8 @@ requires:
   - omniorb
   - openai
   - opensearch_py
-  # Oracle client: restricted distribution — Linux-only, and (per the license plan)
-  # marked redistributable:false so publish keeps it off public CVMFS (like qgraf).
+  # Oracle client bindings: Linux-only (the Instant Client they need is
+  # redistributable: binaries).
   - "oracledb:(?!osx)"
   - pacparser
   - pango
