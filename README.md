@@ -16,8 +16,11 @@ Packages are reused across groups only when the compiler and build type match as
 
 ## Prerequisites
 
-- `bits` installed: see the [bits README](https://github.com/bitsorg/bits#installation) and [system requirements](https://github.com/bitsorg/bits/blob/main/docs/USERGUIDE.md#2-installation--prerequisites).
-- Linux (the LCG platforms built in CI: `x86_64-el8`, `x86_64-el9`, `x86_64-el10`, `aarch64-el9`, `x86_64-ubuntu2204`, `x86_64-ubuntu2404`, `x86_64-ubuntu2604`) or macOS (deployment target 14.0; Homebrew supplies the system layer). To build for another Linux version, use `--docker -a <arch>` ([Docker support](https://github.com/bitsorg/bits/blob/main/docs/REFERENCE.md#22-docker-support)).
+- bits, and one of two setups (see [Installation & Prerequisites](https://github.com/bitsorg/bits/blob/main/docs/USERGUIDE.md#2-installation--prerequisites) in the bits user guide; `bits doctor` checks the machine):
+  - docker or rootless podman, to build in the platform's builder image with `--docker` (recommended, and the only way to reuse what the LCG CI built);
+  - or the system packages listed in [Building natively](https://github.com/bitsorg/bits/blob/main/docs/USERGUIDE.md#building-natively-what-to-install), to build with this machine's compilers and libraries.
+- A platform the LCG CI builds, so that its binaries are reused: `x86_64-el8`, `x86_64-el9`, `x86_64-el10`, `aarch64-el9`, `x86_64-ubuntu2204`, `x86_64-ubuntu2404` and `x86_64-ubuntu2604`. Pass it as `--architecture`: by itself bits names a machine after its OS (an EL9 machine `slc9_x86-64`), which is not one of them. See [Finding a platform with pre-built binaries](https://github.com/bitsorg/bits/blob/main/docs/USERGUIDE.md#finding-a-platform-with-pre-built-binaries).
+- macOS builds natively (deployment target 14.0; Homebrew supplies the system libraries).
 - The GCC compiler is built as part of the stack from [gcc-toolchain](https://gitlab.cern.ch/bits/gcc-toolchain) (the tag depends on the compiler profile); `clang` uses the clang of the host or image.
 - The full `externals` stack is large; see [Speed up large builds](https://github.com/bitsorg/bits/blob/main/docs/COOKBOOK.md#speed-up-large-builds) for `--parallel` and binary-store reuse.
 
@@ -25,13 +28,13 @@ Packages are reused across groups only when the compiler and build type match as
 
 ```bash
 bits init stacks.bits && cd stacks.bits     # or: git clone -b LCG_110 https://github.com/bitsorg/stacks.bits
-bits use build --architecture x86_64-el9 --defaults gcc14::opt --set release=LCG_110
+bits use build --docker --architecture x86_64-el9 --defaults gcc14::opt --set release=LCG_110  # on macOS: without --docker and --architecture
 bits build --dry-run ROOT                   # what would be reused and what built
 bits build ROOT                             # ROOT and its dependencies
 bits enter ROOT/latest                      # shell with ROOT loaded; `exit` to leave
 ```
 
-`bits use build` records the options once for this directory (an explicit flag still wins); the architecture becomes `x86_64-el9-gcc14-opt`. Check the machine with `bits doctor`. `bits build externals` builds every external (libraries, tools, Python, ML, ROOT, Geant4) and `bits build generators` the MC generators; `bits q` lists the built modules. To build elsewhere, `export BITS_WORK_DIR=/path/to/sw`.
+`bits use build` records the options once for this directory (an explicit flag still wins); the architecture becomes `x86_64-el9-gcc14-opt`. `--docker` builds in the platform's builder image; on a machine of the same platform `bits enter` then works here. Without it, bits builds with this machine's compilers and system packages, and reuses nothing the CI built. Check the machine with `bits doctor`. `bits build externals` builds every external (libraries, tools, Python, ML, ROOT, Geant4) and `bits build generators` the MC generators; `bits q` lists the built modules. To build elsewhere, `export BITS_WORK_DIR=/path/to/sw`.
 
 This README describes the `LCG_110` branch. For a direct build clone that branch (`-b LCG_110`), the one matching `--set release`; the published `main` may lag behind it.
 
@@ -71,7 +74,7 @@ One value, `release`, names both the `lcg.bits` branch to build against (`overri
 2. the branch of this checkout, with a trailing `-patches` stripped (`LCG_110-patches` gives `LCG_110`);
 3. `main`: build `lcg.bits` `main` and publish with no release level in the path.
 
-Prefer `--set release=…`. It is what every stacks-based community uses, and since a `--set` value also enters the package hashes, choosing the release another way builds packages that are not reused from what other groups built. The release must exist as an `lcg.bits` branch: currently `main` and `LCG_110` (and `devel`). The `dev3`/`dev4` streams do not change the release; they add pins on top of it.
+Prefer `--set release=…`. It is what every stacks-based community uses, and since a `--set` value also enters the package hashes, choosing the release another way builds packages that are not reused from what other groups built. The release must exist as an `lcg.bits` branch: currently `main`, `LCG_110`, `LCG_110b` (LCG_110 with security upgrades of some packages) and `devel`. A project released against `LCG_110` (an Athena release, say) needs `LCG_110`. The `dev3`/`dev4` streams do not change the release; they add pins on top of it.
 
 ### CVMFS layout
 
@@ -110,11 +113,11 @@ Packages listed under `package_family: MCGenerators` (pythia8, sherpa, herwig3, 
 
 ### Building a community on this base
 
-A community overlay is a `defaults-<group>.sh` that `requires: stacks.bits`, overrides the `lcg.bits` and `stacks.bits` tags with `%(release)s`, and sets its own `system:` prefix and templates. It must not set `env:` or `package_family`, which are hashed, if its packages are to be reused across groups. Examples: [key4hep.bits](https://github.com/bitsorg/key4hep.bits), [ship.bits](https://github.com/bitsorg/ship.bits), [lhcb.bits](https://github.com/bitsorg/lhcb.bits), [atlas.bits](https://github.com/bitsorg/atlas.bits); [testbed.bits](https://github.com/bitsorg/testbed.bits) reruns a group's build against test services. Those overlays select the release the same way (`--set release=LCG_110`), so the release must also exist as a `stacks.bits` branch (`main`, `LCG_110`).
+A community overlay is a `defaults-<group>.sh` that `requires: stacks.bits`, overrides the `lcg.bits` and `stacks.bits` tags with `%(release)s`, and sets its own `system:` prefix and templates. It must not set `env:` or `package_family`, which are hashed, if its packages are to be reused across groups. Examples: [key4hep.bits](https://github.com/bitsorg/key4hep.bits), [ship.bits](https://github.com/bitsorg/ship.bits), [lhcb.bits](https://github.com/bitsorg/lhcb.bits), [atlas.bits](https://github.com/bitsorg/atlas.bits); [testbed.bits](https://github.com/bitsorg/testbed.bits) reruns a group's build against test services. Those overlays select the release the same way (`--set release=LCG_110`), so the release must also exist as a `stacks.bits` branch (`main`, `LCG_110`, `LCG_110b`).
 
 ### Licences and publishing
 
-Licence data (`license:`, `redistributable:`, `acknowledgment:`) is kept in the `lcg.bits` recipes; see [Licence and compliance data](https://github.com/bitsorg/lcg.bits#licence-and-compliance-data). Audit the closure of this stack with `bits compliance --defaults gcc14::opt externals generators`, run in an `LCG_110` checkout (`bits compliance` takes no `--set`, so the release comes from the branch). Publishing to CVMFS, certification and nightly or on-commit builds run in [bits-console](https://gitlab.cern.ch/buncic/bits-console) (LCG community, with `externals` and `generators` as its pinned packages); see [Publishing, Trust and Release Tasks](https://github.com/bitsorg/bits/blob/main/docs/USERGUIDE.md#8-publishing-trust-and-release-tasks).
+Licence data (`license:`, `redistributable:`, `acknowledgment:`) is kept in the `lcg.bits` recipes; see [Licence and compliance data](https://github.com/bitsorg/lcg.bits#licence-and-compliance-data). Audit the closure of this stack with `bits compliance --defaults gcc14::opt externals generators`, run in an `LCG_110` checkout (`bits compliance` takes no `--set`, so the release comes from the branch). Publishing to CVMFS, certification and nightly or on-commit builds (see steps 4 and 5 of [Phase 4 of the bits workflow guide](https://github.com/bitsorg/bits/blob/main/docs/WORKFLOWS.md#phase-4--ci-build-and-cvmfs-publication-via-bits-console)) run in [bits-console](https://gitlab.cern.ch/buncic/bits-console) (LCG community, with `externals` and `generators` as its pinned packages); see [Publishing, Trust and Release Tasks](https://github.com/bitsorg/bits/blob/main/docs/USERGUIDE.md#8-publishing-trust-and-release-tasks).
 
 ## Files
 
