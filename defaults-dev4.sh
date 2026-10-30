@@ -11,11 +11,12 @@ system:
   cvmfs_views_template:       "{prefix}/views/dev4/{day}/{arch}"
 
 overrides:
-  # Version pins mirroring lcgcmake heptools-dev4: dev4 pins ROOT to a fixed
-  # release (6.40.00) on ALL platforms — unlike dev3, which tracks ROOT HEAD.
-  ROOT:                                # lcgcmake: LCG_AA_project(ROOT 6.40.00)
-    version: "v6.40.00"
-    tag: "v6-40-00"
+  # Version pins mirroring lcgcmake heptools-dev4: dev4 builds ROOT from the
+  # v6-42-00-patches branch on ALL platforms — unlike dev3, which tracks ROOT HEAD.
+  ROOT:                                # lcgcmake: ROOT v6-42-00-patches (GIT root.git)
+    source: "https://github.com/root-project/root.git"
+    version: "%(tag_basename)s"
+    tag: "v6-42-00-patches"
   java:                                # lcgcmake: java 17.0.19p10
     version: "17.0.19p10"
     tag: "17.0.19p10"
