@@ -28,17 +28,18 @@ Packages are reused across groups only when the compiler and build type match as
 
 ```bash
 bits init stacks.bits && cd stacks.bits     # or: git clone -b LCG_110 https://github.com/bitsorg/stacks.bits
-bits use build --docker --architecture x86_64-el9 --defaults gcc14::opt --set release=LCG_110  # on macOS: without --docker and --architecture
+bits use --architecture x86_64-el9 --defaults gcc14::opt  # on macOS: without --architecture
+bits use build --docker --set release=LCG_110  # on macOS: without --docker
 bits build --dry-run ROOT                   # what would be reused and what built
 bits build ROOT                             # ROOT and its dependencies
 bits enter ROOT/latest                      # shell with ROOT loaded; `exit` to leave
 ```
 
-`bits use build` records the options once for this directory (an explicit flag still wins); the architecture becomes `x86_64-el9-gcc14-opt`. `--docker` builds in the platform's builder image; on a machine of the same platform `bits enter` then works here. Without it, bits builds with this machine's compilers and system packages, and reuses nothing the CI built. Check the machine with `bits doctor`. `bits build externals` builds every external (libraries, tools, Python, ML, ROOT, Geant4) and `bits build generators` the MC generators; `bits q` lists the built modules. To build elsewhere, `export BITS_WORK_DIR=/path/to/sw`.
+`bits use` records the options once for this directory (an explicit flag still wins): the platform and the defaults for every command, the rest for `bits build`. The build's architecture becomes `x86_64-el9-gcc14-opt`, and `bits q` and `bits enter` find it from the platform and the defaults. `--docker` builds in the platform's builder image; on a machine of the same platform `bits enter` then works here. Without it, bits builds with this machine's compilers and system packages, and reuses nothing the CI built. Check the machine with `bits doctor`. `bits build externals` builds every external (libraries, tools, Python, ML, ROOT, Geant4) and `bits build generators` the MC generators; `bits q` lists the built modules. To build elsewhere, `export BITS_WORK_DIR=/path/to/sw`.
 
 This README describes the `LCG_110` branch. For a direct build clone that branch (`-b LCG_110`), the one matching `--set release`; the published `main` may lag behind it.
 
-`bits` clones the `lcg.bits` branch named by the release (`LCG_110` here) into the work directory on first use. Any package of `lcg.bits` can be built the same way by its `package:` name. If the work directory holds several architectures, pass `-a <arch>` to `bits q`/`bits enter`. See [Managing Environments](https://github.com/bitsorg/bits/blob/main/docs/USERGUIDE.md#6-managing-environments) for `bits load` and `bits setenv`.
+`bits` clones the `lcg.bits` branch named by the release (`LCG_110` here) into the work directory on first use. Any package of `lcg.bits` can be built the same way by its `package:` name. See [Managing Environments](https://github.com/bitsorg/bits/blob/main/docs/USERGUIDE.md#6-managing-environments) for `bits load` and `bits setenv`.
 
 ## Notes for LCG stack users
 
