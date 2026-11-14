@@ -29,9 +29,13 @@ overrides:
     source: "https://github.com/AIDASoft/DD4hep.git"
     version: "%(tag_basename)s"
     tag: "master"
+  Gaudi:                               # lcgcmake: Gaudi master (GIT Gaudi.git)
+    source: "https://gitlab.cern.ch/gaudi/Gaudi.git"
+    version: "%(tag_basename)s"
+    tag: "master"
 
 disable:
-  # Same removals as dev4 — dev3 tracks ROOT HEAD (even newer than dev4's 6.40),
+  # Same removals as dev4 — dev3 tracks ROOT HEAD (even newer than dev4's 6.42),
   # so it hits the same breakages.
   # GENIE needs ROOT's removed TPythia6/TMCParticle classes (gone after ROOT
   # 6.30); LCG_109 also comments it out. Re-enable once a standalone EGPythia6
