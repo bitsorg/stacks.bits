@@ -129,7 +129,7 @@ Licence data (`license:`, `redistributable:`, `acknowledgment:`) is kept in the 
 | `defaults-cuda.sh` | CUDA feature |
 | `defaults-dev3.sh`, `defaults-dev4.sh` | nightly streams: version pins, disabled packages and nightly paths, on top of the release |
 | `defaults-nightly.sh` | nightly view layout |
-| `externals.sh`, `generators.sh` | meta-packages for the externals and the generator set |
+| `packages/externals.sh`, `packages/generators.sh`, `packages/nightly-root.sh` | meta-packages for the externals, generators and nightly ROOT |
 
 ## More information
 
